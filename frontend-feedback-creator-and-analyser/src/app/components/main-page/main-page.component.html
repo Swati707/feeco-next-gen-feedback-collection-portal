@@ -1,0 +1,94 @@
+<ngb-tabset (tabChange)="beforeChange($event)">
+  <ngb-tab id="tab-preventchange1" title="Home">
+    <ng-template #content let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Create new form</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="surveyTitle">Survey Title</label>
+            <div class="input-group">
+              <input id="surveyTitle" class="form-control" placeholder="Survey Name">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="enableCreatePage()">Save</button>
+      </div>
+    </ng-template>
+    <ng-template ngbTabContent>
+      <div class="row">
+        <!-- responsive row has 12 columns by default -->
+        <div class="col-md-6 main-buttons">
+          <!-- uses 6 columns on medium and larger screens... -->
+          <button type="button" class="btn btn-info btn-lg" (click)="open(content)">Create New <i class="fa fa-plus"></i></button>
+        </div>
+        <div class="col-md-6 main-buttons">
+          <!-- uses 12 columns on smaller than medium screens -->
+          <button type="button" class="btn btn-info btn-lg">Copy From Existing <i class="fa fa-clipboard"></i></button>
+        </div>
+      </div>
+      <hr>
+      <div *ngFor="let survey of surveys; index as i; trackBy: trackByFn">
+        <div class="row">
+          <div class="col-sm-1">{{i+1}}</div>
+          <div class="col-sm-3">{{survey.name}}</div>
+          <div class="col-sm-3">
+            <button class="feedbackButton">Feedbacks</button>
+          </div>
+          <div class="row col-sm-5">
+            <div class="col">
+              <button class="toolButton edit"><span>Edit </span></button>
+              <!-- Edit <i class="fa fa-pencil"></i> -->
+            </div>
+            <div class="col">
+              <button class="toolButton delete"><span>Delete </span></button>
+              <!-- Delete <i class="fa fa-trash-o"></i> -->
+            </div>
+            <div class="col">
+              <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab id="tab-preventchange2" title="Create New">
+    <ng-template ngbTabContent>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <button class="pressedButton" [ngClass]="buttonButtonToggleClass" (click)="openFormTitleTextBox()">Form Page Title</button>
+          <div class="form-group" [ngClass]="buttonTextToggleClass">
+            <div class="input-group">
+              <input id="form-title" class="form-control" placeholder="Form Title">
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <button class="accordion" (click)="accordianButtonClick($event)">Section 1</button>
+      <div class="accordian-panel">
+        <p>Lorem ipsum...</p>
+      </div>
+
+      <button class="accordion" (click)="accordianButtonClick($event)">Section 2</button>
+      <div class="accordian-panel">
+        <p>Lorem ipsum...</p>
+      </div>
+
+      <button class="accordion" (click)="accordianButtonClick($event)">Section 3</button>
+      <div class="accordian-panel">
+        <p>Lorem ipsum...</p>
+      </div>
+      
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>

@@ -1,0 +1,20 @@
+{
+  "name": "feedback-form-creator-and-analyser",
+  "version": "1.0.0",
+  "description": "This is a web application for creating forms to take surveys, which can be sent to only specific people through emails and also can create web links. It can also make a detailed analysis on the feedbacks and produce some results based on deep neural networks.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Swati707/feedback-form-creator-and-analyser.git"
+  },
+  "author": "Swati Kanchan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Swati707/feedback-form-creator-and-analyser/issues"
+  },
+  "homepage": "https://github.com/Swati707/feedback-form-creator-and-analyser#readme"
+  // EW791895075IN
+}
