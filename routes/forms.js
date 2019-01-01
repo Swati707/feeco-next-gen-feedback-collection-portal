@@ -2,6 +2,9 @@ const Joi = require('joi');                 // Used for input validation
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
+const { Forms, validateForm} = require('../models/formsModel');
+
+
 
 //Temporary model for  route for forms 
 const Forms = mongosse.models('Forms', new mongosse.Schema({
@@ -63,4 +66,4 @@ router.post('/', async (req, res) => {
     res.send(forms);
 });
 
-module.exports = router;
+module.exports = routerForm;

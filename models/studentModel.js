@@ -16,3 +16,5 @@ function validateCustomer(Student) {
 
     return Joi.validate(Student, studentSchema);
 }
+exports.Student = Student ;
+exports.validateStudent = validateStudent;

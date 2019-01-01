@@ -12,10 +12,12 @@ const Forms = mongosse.models('Forms', new mongosse.Schema({
 
 }));
 
-function validateCustomer(forms) {
+function validateForms(forms) {
     const formSchema = {
         
     }
 
     return Joi.validate(forms, formSchema);
 }
+exports.Forms = Forms ;
+exports.validateForms = validateForms;

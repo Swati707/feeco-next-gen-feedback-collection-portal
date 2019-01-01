@@ -62,7 +62,16 @@ app.use((req, res, next) => {
 //routes
 const route = require('./api/routes/routes');
 app.use('/routes/routes.js', route);
+
+
+const route = require('./api/routes/feedbacks');
+const route = require('./api/routes/teachers');
+const route = require('./api/routes/students');
+const route = require('./api/routes/forms');
 app.use('./routes/feedbacks.js', feedbacks);
+app.use('./routes/teachers.js', teachers);
+app.use('./routes/students.js', students);
+app.use('./routes/forms.js', forms);
 
 
 

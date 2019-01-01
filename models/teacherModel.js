@@ -21,10 +21,13 @@ const Teacher = mongosse.models('Teacher', new mongosse.Schema({
     courses : [String]
 }));
 
-function validateCustomer(student) {
-    const studentSchema = {
+function validateCustomer(teacher) {
+    const teacherSchema = {
         
     }
 
-    return Joi.validate(student, studentSchema);
+    return Joi.validate(teacher, teacherSchema);
 }
+
+exports.Teacher = Teacher ;
+exports.validateTeacher = validateTeacher;

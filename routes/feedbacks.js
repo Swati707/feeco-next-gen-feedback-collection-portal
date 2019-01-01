@@ -2,6 +2,8 @@ const Joi = require('joi');                 // Used for input validation
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
+const { Feedback, validateFeedback} = require('../models/feedbackModel');
+
 
 //Temporary model in route for feedbacks 
 const Feedback = mongosse.models('Feedback', new mongosse.Schema({
@@ -31,7 +33,7 @@ router.get('/', async (req, res) => {
 
 //Handling creation (POST) of feedbacks 
 router.post('/', async (req, res) => {
-    const { error } = validateCustomer(req.body);
+    const { error } = validateFeedback(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
     let feedback = new Feedback({
@@ -56,11 +58,11 @@ router.delete('/:id', async (req, res) => {
 
 // Handling updation (PUT )of feedbacks 
 router.put('/:id', async (req, res) => {
-    const { error } = validateCustomer(req.body);
+    const { error } = validateFeedback(req.body);
     if (error) return res.status.send(error.details[0].message);
 
     const feedback = await Feedback.findByIdAndUpdate(req.param.id, {
-        // Updation of customer 
+        // Updation of feedbacks 
     }, { new: true });
 
     if (!feedback) return res.status(404).send("The feedback input is invalid.");
@@ -68,4 +70,4 @@ router.put('/:id', async (req, res) => {
     res.send(feedback);
 });
 
-module.exports = router;
+module.exports = routerFeedback;
