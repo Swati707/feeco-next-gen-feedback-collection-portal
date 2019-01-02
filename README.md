@@ -9,3 +9,8 @@ This is a web application for creating forms to take surveys, which can be sent 
 ## Phase 4 - Make services in Angular
 ## Phase 5 - Deployment of this application to the some server
 ## Phase 6 - Apply sentiment analysis Neural Networks on the feedbacks
+
+### Basic chalk-out of project:
+<p align="center">
+  <img alt="Chart diagram showing different components" src="https://github.com/Swati707/feedback-form-creator-and-analyser/blob/master/images/chalkOut.png" width="500">
+</p>
