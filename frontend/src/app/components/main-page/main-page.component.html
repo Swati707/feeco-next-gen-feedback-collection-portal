@@ -65,30 +65,103 @@
     <ng-template ngbTabContent>
       <div class="panel panel-default">
         <div class="panel-body">
-          <button class="pressedButton" [ngClass]="buttonButtonToggleClass" (click)="openFormTitleTextBox()">Form Page Title</button>
+          <!-- <button class="pressedButton" [ngClass]="buttonButtonToggleClass" (click)="openFormTitleTextBox()">{{title}}</button>
           <div class="form-group" [ngClass]="buttonTextToggleClass">
             <div class="input-group">
-              <input id="form-title" class="form-control" placeholder="Form Title">
+              <input [(ngModel)]="name" id="form-title" class="form-control" placeholder="Form Title">
+            </div>
+            <div>
+               <button class="btn btn-outline-dark" style="margin: 20px" onclick="setTitle()"> Save</button>  
+            </div>
+          </div> -->
+          <div class="pressedButton">
+            <h4>{{title}}</h4>
+          </div>
+          <div *ngIf="!editTitle">
+            <button class="btn btn-outline-dark" style="margin: 20px" (click)="titleEdit()">Edit</button>
+          </div>
+          <div *ngIf="editTitle">
+            <div class="input-group">
+              <input [(ngModel)]="title" id="form-title" class="form-control" placeholder="Form Title">
+            </div>
+            <div>
+              <button class="btn btn-outline-dark" style="margin: 20px" (click)="setTitleFunction(title)"> Save</button>
             </div>
           </div>
         </div>
       </div>
       <hr>
-      <button class="accordion" (click)="accordianButtonClick($event)">Section 1</button>
-      <div class="accordian-panel">
-        <p>Lorem ipsum...</p>
+
+      <button class="btn btn-outline-primary" style="margin: 20px" (click)="addQuestion(title)">Add Question</button>
+
+      <div *ngFor="let question of questions; index as i; trackBy: trackByFn">
+        <button class="accordion" (click)="accordianButtonClick($event)">Question {{i+1}}</button>
+        <div class="accordian-panel">
+          <div>
+            <h4>Question: {{question.name}}</h4>
+          </div>
+          <div *ngIf="!editQuestion[i]">
+            <button class="btn btn-outline-dark" style="margin: 20px" (click)="editQuestion[i] = true">Edit Question</button>
+          </div>
+          <div *ngIf="editQuestion[i]">
+            <div class="input-group">
+              <input [(ngModel)]="question.name" id="form-title" class="form-control" placeholder="Question">
+            </div>
+            <div>
+              <button class="btn btn-outline-dark" style="margin: 20px" (click)="editQuestionDetails(i,question.name)">
+                Save</button>
+            </div>
+          </div>
+          <div>
+            <h5>Question Type: {{question.type}}</h5>
+          </div>
+          <div *ngIf="!editQuestionType[i]">
+            <button class="btn btn-outline-dark" style="margin: 20px" (click)="editQuestionType[i] = true">Edit
+              Question
+              Type</button>
+          </div>
+          <div *ngIf="editQuestionType[i]">
+            <select class='select-option' required [(ngModel)]='question.type'>
+              <option class='option' *ngFor='let option of options' [value]="option">{{option}}</option>
+            </select>
+            <div>
+              <button class="btn btn-outline-dark" style="margin: 20px" (click)="editQuestionTypeDetails(i,question.type)">
+                Save</button>
+            </div>
+          </div>
+          <div>
+            <div *ngIf="question.type == 'Boolean'">
+              <h5> Answers:</h5>
+              <div *ngFor="let a of question.answer">
+                {{a}}
+              </div>
+            </div>
+          </div>
+          <div *ngIf="question.type == 'Text'">
+            <h5> Answers: Text </h5>
+          </div>
+
+          <div *ngIf="question.type == 'Multi-select'">
+            <h5> Answers: </h5>
+            <div *ngFor="let a of question.answer">
+                {{a}}
+              </div>
+            <input [(ngModel)]="multiselect" class="form-control" placeholder="Add Multi Select Value">
+            <button class="btn btn-outline-dark" style="margin: 20px" (click)="addMultiSelectOption(i,multiselect)"> Add</button>
+          </div>
+
+          <div *ngIf="question.type == 'Radio'">
+              <h5> Answers: </h5>
+              <div *ngFor="let a of question.answer">
+                  {{a}}
+                </div>
+              <input [(ngModel)]="multiselect" class="form-control" placeholder="Add Radio select Value">
+              <button class="btn btn-outline-dark" style="margin: 20px" (click)="addMultiSelectOption(i,multiselect)"> Add</button>
+            </div>
+
+        </div>
       </div>
 
-      <button class="accordion" (click)="accordianButtonClick($event)">Section 2</button>
-      <div class="accordian-panel">
-        <p>Lorem ipsum...</p>
-      </div>
-
-      <button class="accordion" (click)="accordianButtonClick($event)">Section 3</button>
-      <div class="accordian-panel">
-        <p>Lorem ipsum...</p>
-      </div>
-      
     </ng-template>
   </ngb-tab>
 </ngb-tabset>

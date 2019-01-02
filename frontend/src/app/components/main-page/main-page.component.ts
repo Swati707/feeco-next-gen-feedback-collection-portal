@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Surveys } from '../../models/surveys';
+import { Questions } from '../../models/questions';
 
 @Component({
   selector: 'main-page',
@@ -16,6 +17,17 @@ export class MainPageComponent implements OnInit {
   newSurveyCreateTitle: string = "";
   buttonTextToggleClass: string = "hide";
   buttonButtonToggleClass: string = "show";
+  title = "Feedback CS 101";
+  editTitle = false;
+  editQuestion = [];
+  editQuestionType = [];
+  questions: Array<Questions> = [];
+  questions_len = 0
+  multiselect = null;
+  options = ['Multi-select', 'Radio', 'Text', 'Boolean'];
+  optionSelected: any;
+
+
   constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -64,6 +76,47 @@ export class MainPageComponent implements OnInit {
       }
     }
   };
+
+  public addQuestion(){
+    this.questions_len = this.questions.length + 1
+    this.questions.push({
+      id: this.questions_len,
+      name: null,
+      type: null,
+      answer: []
+    });
+    this.editQuestion.push(false);
+    this.editQuestion.push(false);
+  }
+
+  public editQuestionDetails(index,q){
+    this.questions[index].name = q;
+    this.editQuestion[index] = false;
+  }
+
+  public editQuestionTypeDetails(index,t){
+    this.questions[index].type = t;
+    this.editQuestionType[index] = false;
+    if(t == 'Boolean'){
+      this.questions[index].answer.push('True');
+      this.questions[index].answer.push('False');
+    }
+    
+  }
+
+  public addMultiSelectOption(index,option){
+    this.questions[index].answer.push(option);
+    this.multiselect = null
+  }
+
+  public setTitleFunction(x){
+    this.title = x;
+    this.editTitle = false;
+  }
+
+  public titleEdit(){
+    this.editTitle = true;
+  }
 
   public enableCreatePage() {
     console.log("check");

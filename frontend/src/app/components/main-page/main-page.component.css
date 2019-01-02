@@ -38,7 +38,7 @@
 .accordian-panel {
     padding: 0 18px;
     background-color: white;
-    overflow: hidden;
+    overflow: scroll;
     max-height: 0;
     transition: max-height 0.2s ease-out;
 }
