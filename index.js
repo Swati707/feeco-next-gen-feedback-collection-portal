@@ -9,19 +9,12 @@ const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 //mongoose.Promise = global.Promise;
 const bodyparser = require('body-parser');
-const path = require('path');
-const morgan = require('morgan');
 const app = express();
-const router = express.Router();
-const joi = require('joi');
-const debug = require('debug')('app:Startup');
 
 // importing route file 
-const route = require('./routes/routes');
-  /*
   //connect to mongoDB
-  mongoose.connect('mongodb://lokesh:lokesh@ds121599.mlab.com:21599/farmer-retailer',
-              {useMongoClient: true, server: { poolSize: 5 }});
+  mongoose.connect('mongodb://localhost:27017/projectSaranshDB',
+              {server: { poolSize: 5 }});
   
   //on connection
   mongoose.connection.on('connected', ()=>{
@@ -32,46 +25,42 @@ const route = require('./routes/routes');
         console.log("error in connection to database mongodb.\n"+err);
     }
   });
-  */
 
   //adding middleware
   app.use(cors());
   app.use(bodyparser.json());
 
 //static files
-app.use(express.static(path.join(__dirname, 'frontend/public')));
-
-// //Function for validating Objects
-// function validateTeacher(Teacher) {
-//   const Schema = {
-//     name = Joi
-//   }
-// }
-
-//Enabling CORS (Cross Origin Access)
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
-
-  if (req.method === 'Options') {
-    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE');
-    return res.status(200).json({});
-  }
-});
+// app.use(express.static(path.join(__dirname, 'frontend/public')));
 
 //routes
-const route = require('./api/routes/routes');
-app.use('/routes/routes.js', route);
+const formsRoute = require('./backend/routes/forms')
+// const responsesRoute = require('./backend/routes/responses')
+const formCreatorRoute = require('./backend/routes/form_creators')
+// const respondentRoute = require('./backend/routes/respondents')
 
+// app.use('/response', responsesRoute)
+app.use('/creator', formCreatorRoute)
+// app.use('/respondent', respondentRoute)
+app.use('/form', formsRoute)
 
-const route = require('./api/routes/feedbacks');
-const route = require('./api/routes/teachers');
-const route = require('./api/routes/students');
-const route = require('./api/routes/forms');
-app.use('./routes/feedbacks.js', feedbacks);
-app.use('./routes/teachers.js', teachers);
-app.use('./routes/students.js', students);
-app.use('./routes/forms.js', forms);
+app.use('/a', (req, res) => {
+  console.log("woij")
+  res.json({g:"gfh"})
+})
+
+app.get('/',(req,res,next)=>{
+  console.log(res);
+  // res.sendFile(path.join(__dirname,'frontend/public/index.html'));
+  res.status(200).json({
+      messsage:"You requested Home page"
+  })
+});
+
+app.get('*',(req,res)=>{
+  res.send("Other pages")
+  // res.sendFile(path.join(__dirname,'frontend/src/index.html'));
+})
 
 
 

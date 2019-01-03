@@ -1,7 +1,5 @@
-const Joi = require('joi');                 // Used for input validation 
 const express = require('express');
-const mongoose = require('mongoose');
-const router = express.Router();
+const router = require('express-promise-router')();
 const { Feedback, validateFeedback} = require('../models/feedbackModel');
 
 
