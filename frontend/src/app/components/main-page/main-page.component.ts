@@ -7,6 +7,7 @@ import { MatDialog, MatDialogConfig } from "@angular/material";
 import { CreateFormComponent } from '../../components/create-form/create-form.component';
 import { CopyFormComponent } from '../../components/copy-form/copy-form.component';
 
+
 @Component({
   selector: 'main-page',
   templateUrl: './main-page.component.html',
@@ -35,8 +36,10 @@ export class MainPageComponent implements OnInit {
 
   }
 
+
   ngOnInit() {
     // Get all the surveys from backend
+
 
     this.forms.push({
       id: '1',
@@ -47,6 +50,15 @@ export class MainPageComponent implements OnInit {
       name: 'Survey 2'
     });
     this.forms.push({
+    this.surveys.push({
+      id: '1',
+      name: 'Survey 1'
+    });
+    this.surveys.push({
+      id: '2',
+      name: 'Survey 2'
+    });
+    this.surveys.push({
       id: '3',
       name: 'Survey 3'
     });
@@ -171,7 +183,6 @@ export class MainPageComponent implements OnInit {
   //   console.log("check");
   //   this.disableCreatePage = false;
   // }
-
   open(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;

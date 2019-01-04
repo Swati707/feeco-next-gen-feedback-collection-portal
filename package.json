@@ -4,6 +4,7 @@
   "description": "This is a web application for creating forms to take surveys, which can be sent to only specific people through emails and also can create web links. It can also make a detailed analysis on the feedbacks and produce some results based on deep neural networks.",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,9 +20,12 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "express-promise-router": "^3.0.3",
     "joi": "^14.3.0",
     "mongoose": "^5.4.0",
-    "morgan": "^1.9.1",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
     "nodemon": "^1.18.9"
   }
 }
