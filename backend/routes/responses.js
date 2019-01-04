@@ -10,5 +10,5 @@ router.route('/:id')
     .patch(responseController.updateResponse)
 
 router.route('/form/:form_id')
-    .get(responseController.getResponseOneForm)
+    .get(responseController.getResponsesOfOneForm)
 module.exports = router;

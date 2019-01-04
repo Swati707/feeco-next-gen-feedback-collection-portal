@@ -18,7 +18,7 @@ module.exports = {
             phone: params.phone,
             dob: params.dob
         })
-        let creator = await newCreator.save()
+        creator = await newCreator.save()
         console.log(creator)
         res.status(200).json({success: true, creator: creator})
     },
