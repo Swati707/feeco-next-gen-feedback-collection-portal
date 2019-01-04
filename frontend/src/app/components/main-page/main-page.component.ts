@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Form } from '../../models/form';
-import { Question } from '../../models/question';
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { CreateFormComponent } from '../../components/create-form/create-form.component';
 import { CopyFormComponent } from '../../components/copy-form/copy-form.component';
-
+import { LocalStorageService } from 'angular-web-storage';
+import { FormService } from '../../services/form.service';
+import { FormCreatorService } from '../../services/form-creator.service';
 
 @Component({
   selector: 'main-page',
@@ -15,44 +14,16 @@ import { CopyFormComponent } from '../../components/copy-form/copy-form.componen
 })
 export class MainPageComponent implements OnInit {
 
-  closeResult: string;
-  // disableCreatePage: boolean = false;
   forms: Array<Form> = [];
-  newFormCreateTitle: string = "";
-  //buttonTextToggleClass: string = "hide";
-  //buttonButtonToggleClass: string = "show";
-  //title = "Feedback CS 101";
-  //editTitle = false;
-  //editQuestion = [];
-  //editQuestionType = [];
-  //questions: Array<Questions> = [];
-  //questions_len = 0
-  //multiselect = null;
-  //options = ['Multi-select', 'Radio', 'Text', 'Boolean'];
-  //optionSelected: any;
-
-
-  constructor(private modalService: NgbModal, private dialog: MatDialog) {
-
+  form_creator: String
+  constructor(private dialog: MatDialog, private formCreatorService: FormCreatorService, public localStorage: LocalStorageService, private fromService: FormService) {
   }
-
 
   ngOnInit() {
     // Get all the surveys from backend
-
-
-    // this.forms.push({
-    //   _id: '1',
-    //   name: 'Survey 1',
-    // });
-    // this.forms.push({
-    //   id: '2',
-    //   name: 'Survey 2'
-    // });
-    // this.forms.push({
-    //   id: '3',
-    //   name: 'Survey 3'
-    // });
+    let form_creator = this.localStorage.get('form_creator');
+    this.form_creator = form_creator._id;
+    this.getAllForms(this.form_creator)
   }
 
   openCreateDialog() {
@@ -69,10 +40,16 @@ export class MainPageComponent implements OnInit {
       data => {
         console.log("Dialog output:", data);
         // copy content form data.copyFormId to new
-        // this.forms.push({
-        //   id: data.copy + 100,
-        //   name: data.title
-        // });
+        let formTitle = {
+          "name": data.title,
+          "form_creator": this.form_creator
+        }
+        this.fromService.addForm(formTitle).subscribe(
+          data => {
+            console.log(data, "form creation")
+            this.getAllForms(this.form_creator)
+          }
+        )
       });
   }
 
@@ -99,4 +76,38 @@ export class MainPageComponent implements OnInit {
 
   }
 
+  getAllForms(id) {
+    this.formCreatorService.getCreator(id).subscribe(
+      data => {
+        console.log(data, "forms_creator");
+        this.forms = data.creator.forms;
+        console.log(this.forms)
+        this.localStorage.set('forms', this.forms)
+      }
+    )
+  }
+
+  deleteForm(id) {
+    this.fromService.deleteForm(id).subscribe(
+      data => {
+        this.getAllForms(this.form_creator);
+      }
+    )
+  }
+
+  formState(form, e) {
+    console.log(form.active_status, e)
+    form.active_status = e.checked;
+    this.fromService.updateForm(form._id, form).subscribe(
+      data => {
+        console.log(data, "update form");
+        this.formCreatorService.getCreator(this.form_creator).subscribe(
+          data => {
+            console.log(data, "forms_creator");
+            let forms = data.creator.forms;
+            console.log(forms)
+            this.localStorage.set('forms', forms)
+          })
+      })
+  }
 }

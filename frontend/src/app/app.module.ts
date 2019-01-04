@@ -12,12 +12,14 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { CreateFormComponent } from './components/create-form/create-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatNativeDateModule, MatTableModule, MatGridListModule,MatSliderModule, MatStepperModule, MatExpansionModule, MatTabsModule, MatDatepickerModule, MatIconModule, MatButtonModule, MatCheckboxModule, MatToolbarModule, MatCardModule, MatFormFieldModule, MatInputModule, MatRadioModule, MatListModule, MatSelectModule, MatProgressSpinnerModule, } from '@angular/material';
+import { MatNativeDateModule, MatSlideToggleModule, MatTableModule, MatGridListModule,MatSliderModule, MatStepperModule, MatExpansionModule, MatTabsModule, MatDatepickerModule, MatIconModule, MatButtonModule, MatCheckboxModule, MatToolbarModule, MatCardModule, MatFormFieldModule, MatInputModule, MatRadioModule, MatListModule, MatSelectModule, MatProgressSpinnerModule, } from '@angular/material';
 import { CopyFormComponent } from './components/copy-form/copy-form.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { FormCreatorService } from "./services/form-creator.service"
 import { FormService } from "./services/form.service"
 import { HttpClientModule } from '@angular/common/http';
+import { AngularWebStorageModule } from 'angular-web-storage';
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,10 +29,12 @@ import { HttpClientModule } from '@angular/common/http';
     EditformComponent,
     CreateFormComponent,
     CopyFormComponent,
-    SigninComponent
+    SigninComponent,
   ],
   imports: [
     NgbModule,
+    AngularWebStorageModule,
+    MatSlideToggleModule,
     BrowserModule,
     HttpClientModule,
     FormsModule,
@@ -47,7 +51,7 @@ import { HttpClientModule } from '@angular/common/http';
     RouterModule.forRoot([
       { path: '', component: SigninComponent },
       { path: 'creator', component: MainPageComponent },
-      { path: 'form/:id', component: EditformComponent },
+      { path: 'form/:_id', component: EditformComponent },
       // {path: '**', component: NotFoundComponent },
     ])
   ],

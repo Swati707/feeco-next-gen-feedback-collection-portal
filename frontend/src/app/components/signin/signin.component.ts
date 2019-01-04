@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder } from "@angular/forms";
 import { Router } from '@angular/router'
 import { FormCreatorService } from '../../services/form-creator.service'
+import { LocalStorageService } from 'angular-web-storage';
 
 @Component({
   selector: 'signin',
@@ -10,7 +11,7 @@ import { FormCreatorService } from '../../services/form-creator.service'
 })
 export class SigninComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private router: Router, private formCreatorService: FormCreatorService) { }
+  constructor(private fb: FormBuilder, private router: Router, private formCreatorService: FormCreatorService, public localStorgae: LocalStorageService) { }
   username: String
   password: string
   formClass: FormGroup
@@ -44,9 +45,12 @@ export class SigninComponent implements OnInit {
     this.formCreatorService.signIn(userDetails).subscribe(
       data => {
         console.log(data)
+        if (data.success) {
+          this.localStorgae.set('form_creator', data.creator)
+          this.router.navigate(['\creator']);
+        }
       }
     )
-    //this.router.navigate(['\creator']); 
   }
 
   signup() {
@@ -67,7 +71,7 @@ export class SigninComponent implements OnInit {
     )
     this.registered = true
     this.signup_username = null
-    this.signup_password  = null
+    this.signup_password = null
     this.name = null
     this.dob = null
     this.phone = null

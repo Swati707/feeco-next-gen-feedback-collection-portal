@@ -10,7 +10,7 @@
 
   <mat-toolbar style="color: blue; background-color: aqua">
     <mat-toolbar-row>
-      <span>Form Name</span>
+      <span>{{form_name}}</span>
       <span class="spacer"></span>
       <button class="toolButton addQuestion" (click)="addQuestion()"><span>Add Question</span></button>
       <button class="toolButton settings"> <span> Form Settings</span></button>
@@ -25,7 +25,7 @@
             Question
           </mat-panel-title>
           <mat-panel-description>
-            {{q.type ? q.type : 'Question Type'}}: {{q.name ? q.name : 'Question Name'}}
+            {{q.question_type  ? q.question_type : 'Question Type'}}: {{q.question ? q.question : 'Question Name'}}
           </mat-panel-description>
         </mat-expansion-panel-header>
         <mat-vertical-stepper linear #stepper>
@@ -33,7 +33,7 @@
             <form>
               <ng-template matStepLabel>Fill out Question title</ng-template>
               <mat-form-field>
-                <input matInput placeholder="Question title" [(ngModel)]="q.name" name="question" required>
+                <input matInput placeholder="Question title" [(ngModel)]="q.question" name="question" required>
               </mat-form-field>
               <div>
                 <button mat-button matStepperNext>Next</button>
@@ -43,16 +43,16 @@
           <mat-step [stepControl]="secondFormGroup">
             <form>
               <ng-template matStepLabel>Select Question Type</ng-template>
-              <mat-select placeholder="Question Type" style="width: 300px " [(ngModel)]="q.type" [ngModelOptions]="{standalone: true}">
+              <mat-select placeholder="Question Type" style="width: 300px " [(ngModel)]="q.question_type" [ngModelOptions]="{standalone: true}">
                 <mat-option *ngFor="let type of questionTypes" [value]="type.name">
                   {{type.name}}
                 </mat-option>
               </mat-select>
             </form>
             <div style="padding:0.4em"></div>
-            <div *ngIf="q.type == 'Single Select' || q.type == 'Multi Select'">
+            <div *ngIf="q.question_type  == 'Single Select' || q.question_type  == 'Multi Select'">
               <div style=" padding:0.5em">
-                <mat-list *ngFor="let option of options">
+                <mat-list *ngFor="let option of q.possible_answers">
                   <mat-list-item> {{option}} </mat-list-item>
                 </mat-list>
               </div>
@@ -60,9 +60,9 @@
               <mat-form-field>
                 <input matInput placeholder="Option Name" [(ngModel)]="option">
               </mat-form-field>
-              <button mat-button (click)="addOption(q)">Add</button>
+              <button mat-button (click)="addOption(q.possible_answers)">Add</button>
             </div>
-            <div *ngIf="q.type == 'Number Rating'">
+            <div *ngIf="q.question_type == 'Number Rating'">
               <ng-template>Add options for Number Ratings</ng-template>
               <div>
                 <mat-form-field>
@@ -77,7 +77,7 @@
             </div>
             <div style="padding-top: 20px">
               <button mat-button matStepperPrevious>Back</button>
-              <button mat-button matStepperNext>Next</button>
+              <button mat-button matStepperNext (click)="updateQuestion()">Next</button>
             </div>
           </mat-step>
           <mat-step state="done">

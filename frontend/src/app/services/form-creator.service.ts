@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormCreator } from "../models/form_creator"
+import { Form } from "../models/form"
 
 @Injectable({
   providedIn: 'root'
@@ -27,14 +28,14 @@ export class FormCreatorService {
   }
 
   getCreator(id) {
-    return this.http.get<FormCreator>('http://localhost:3000/creator/' + id, this.options)
+    return this.http.get<any>('http://localhost:3000/creator/' + id, this.options)
   }
 
   updateCreator(id, body) {
-    return this.http.patch<FormCreator>('http://localhost:3000/creator/' + id, body , this.options)
+    return this.http.patch<any>('http://localhost:3000/creator/' + id, body , this.options)
   }
 
   deleteCreator(id) {
-    return this.http.delete<FormCreator>('http://localhost:3000/creator/' + id, this.options)
+    return this.http.delete<any>('http://localhost:3000/creator/' + id, this.options)
   }
 }
