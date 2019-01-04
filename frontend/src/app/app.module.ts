@@ -15,7 +15,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule, MatTableModule, MatGridListModule,MatSliderModule, MatStepperModule, MatExpansionModule, MatTabsModule, MatDatepickerModule, MatIconModule, MatButtonModule, MatCheckboxModule, MatToolbarModule, MatCardModule, MatFormFieldModule, MatInputModule, MatRadioModule, MatListModule, MatSelectModule, MatProgressSpinnerModule, } from '@angular/material';
 import { CopyFormComponent } from './components/copy-form/copy-form.component';
 import { SigninComponent } from './components/signin/signin.component';
-
+import { FormCreatorService } from "./services/form-creator.service"
+import { FormService } from "./services/form.service"
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +32,7 @@ import { SigninComponent } from './components/signin/signin.component';
   imports: [
     NgbModule,
     BrowserModule,
+    HttpClientModule,
     FormsModule,
     MatDialogModule,
     ReactiveFormsModule,
@@ -48,7 +51,7 @@ import { SigninComponent } from './components/signin/signin.component';
       // {path: '**', component: NotFoundComponent },
     ])
   ],
-  providers: [],
+  providers: [FormCreatorService, FormService],
   bootstrap: [AppComponent],
   entryComponents: [CreateFormComponent, CopyFormComponent]
 })

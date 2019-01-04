@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Questions } from '../../models/questions';
+import { Question } from '../../models/question';
 
 @Component({
   selector: 'editform',
@@ -17,13 +17,13 @@ export class EditformComponent implements OnInit {
     value: String
   }> = []
 
-  questions:Array<Questions> = []
+  questions: Array<Question> = []
 
-  options=[];
+  options = [];
   option;
   qType;
-  sliderValue=0;
-  constructor(private fb: FormBuilder) { 
+  sliderValue = 0;
+  constructor(private fb: FormBuilder) {
     this.questionTypes.push({
       name: 'Text',
       value: 'T'
@@ -58,18 +58,19 @@ export class EditformComponent implements OnInit {
     // });
   }
 
-  addOption(){
-      this.options.push(this.option)
-      this.option = null;
+  addOption() {
+    this.options.push(this.option)
+    this.option = null;
   }
 
-  addQuestion(){
+  addQuestion() {
     this.questions.push({
-      id: null,
-      name: null,
-      type: null,
-      options:null
+      _id: null,
+      question: null,
+      question_type: null,
+      possible_answers: null,
+      question_number: null
     }
-  )
+    )
   }
 }
