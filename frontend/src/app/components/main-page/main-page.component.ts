@@ -50,15 +50,6 @@ export class MainPageComponent implements OnInit {
       name: 'Survey 2'
     });
     this.forms.push({
-    this.surveys.push({
-      id: '1',
-      name: 'Survey 1'
-    });
-    this.surveys.push({
-      id: '2',
-      name: 'Survey 2'
-    });
-    this.surveys.push({
       id: '3',
       name: 'Survey 3'
     });
