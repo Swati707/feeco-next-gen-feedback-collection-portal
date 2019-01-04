@@ -1,23 +1,23 @@
-.mainPage{
-  height: calc(100vh - 64px);
+.mainPage {
+  height: calc(100vh - 65px);
   width: auto;
+  overflow-y: scroll;
 }
 
-.footer {
-  width: 100%;
-  height: 50px;
-  z-index: 3000;
-  bottom: 0;
-  left: 0;
-  position: relative;
-  clear: both;
+.spacer {
+  flex: 1 1 auto;
 }
 
-.example-spacer {
-flex: 1 1 auto;
+.center {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
 }
 
-.toolButton.delete {
+.mat-button, .mat-raised-button{
+    background-color: whitesmoke;
+} 
+.toolButton.addQuestion {
   border-radius: 4px;
   background-color: #f4511e;
   border: none;
@@ -25,14 +25,14 @@ flex: 1 1 auto;
   text-align: center;
   font-size: 14px;
   padding: 5px;
-  width: 100px;
+  width: 130px;
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
 }
 
 
-.toolButton.feedback {
+.toolButton.settings {
   border-radius: 4px;
   background-color: #1e8df4;
   border: none;
@@ -40,31 +40,7 @@ flex: 1 1 auto;
   text-align: center;
   font-size: 14px;
   padding: 5px;
-  width: 100px;
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 5px;
-}
-
-.toolButton.feedback span:after {
-  font-family: FontAwesome;
-  content: "\f15c";
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
-}
-
-.toolButton.edit {
-  border-radius: 4px;
-  background-color: rgb(78, 189, 78);
-  border: none;
-  color: #FFFFFF;
-  text-align: center;
-  font-size: 14px;
-  padding: 5px;
-  width: 100px;
+  width: 130px;
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
@@ -77,9 +53,9 @@ flex: 1 1 auto;
   transition: 0.5s;
 }
 
-.toolButton.delete span:after {
+.toolButton.settings span:after {
   font-family: FontAwesome;
-  content: "\f014";
+  content: "\f085";
   position: absolute;
   opacity: 0;
   top: 0;
@@ -87,9 +63,9 @@ flex: 1 1 auto;
   transition: 0.5s;
 }
 
-.toolButton.edit span:after {
+.toolButton.addQuestion span:after {
   font-family: FontAwesome;
-  content: "\f044";
+  content: "\f055";
   position: absolute;
   opacity: 0;
   top: 0;
@@ -106,75 +82,14 @@ flex: 1 1 auto;
   right: 0;
 }
 
-/* The switch - the box around the slider */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
-
-/* Hide default HTML checkbox */
-.switch input {
-  display: none;
-}
-
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked+.slider {
-  background-color: #2196F3;
-}
-
-input:focus+.slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked+.slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
-
 .spacer {
   flex: 1 1 auto;
 }
 
 .center {
-    margin: auto;
-    width: 50%;
-    padding: 10px;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
 }
 
 
@@ -224,6 +139,12 @@ input:checked+.slider:before {
   transition: 0.5s;
 }
 
+.mainPage {
+  height: calc(100vh - 64px);
+  width: auto
+}
+
+
 .toolButton.home span:after {
   font-family: FontAwesome;
   content: "\f015";
@@ -241,4 +162,20 @@ input:checked+.slider:before {
 .toolButton:hover span:after {
   opacity: 1;
   right: 0;
+}
+
+.footer {
+
+  margin-top: 65px;
+  width: 100%;
+  height: 50px;
+  z-index: 3000;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  clear: both;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
 }

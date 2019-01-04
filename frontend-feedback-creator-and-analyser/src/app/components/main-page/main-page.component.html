@@ -1,167 +1,55 @@
-<ngb-tabset (tabChange)="beforeChange($event)">
-  <ngb-tab id="tab-preventchange1" title="Home">
-    <ng-template #content let-c="close" let-d="dismiss">
-      <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Create new form</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="surveyTitle">Survey Title</label>
-            <div class="input-group">
-              <input id="surveyTitle" class="form-control" placeholder="Survey Name">
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="enableCreatePage()">Save</button>
-      </div>
-    </ng-template>
-    <ng-template ngbTabContent>
-      <div class="row">
-        <!-- responsive row has 12 columns by default -->
-        <div class="col-md-6 main-buttons">
-          <!-- uses 6 columns on medium and larger screens... -->
-          <button type="button" class="btn btn-info btn-lg" (click)="open(content)">Create New <i class="fa fa-plus"></i></button>
-        </div>
-        <div class="col-md-6 main-buttons">
-          <!-- uses 12 columns on smaller than medium screens -->
-          <button type="button" class="btn btn-info btn-lg">Copy From Existing <i class="fa fa-clipboard"></i></button>
-        </div>
-      </div>
-      <hr>
-      <div *ngFor="let survey of surveys; index as i; trackBy: trackByFn">
-        <div class="row">
-          <div class="col-sm-1">{{i+1}}</div>
-          <div class="col-sm-3">{{survey.name}}</div>
-          <div class="col-sm-3">
-            <button class="feedbackButton">Feedbacks</button>
-          </div>
-          <div class="row col-sm-5">
-            <div class="col">
-              <button class="toolButton edit"><span>Edit </span></button>
-              <!-- Edit <i class="fa fa-pencil"></i> -->
-            </div>
-            <div class="col">
-              <button class="toolButton delete"><span>Delete </span></button>
-              <!-- Delete <i class="fa fa-trash-o"></i> -->
-            </div>
-            <div class="col">
-              <label class="switch">
-                <input type="checkbox">
-                <span class="slider round"></span>
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-    </ng-template>
-  </ngb-tab>
-  <ngb-tab id="tab-preventchange2" title="Create New">
-    <ng-template ngbTabContent>
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <!-- <button class="pressedButton" [ngClass]="buttonButtonToggleClass" (click)="openFormTitleTextBox()">{{title}}</button>
-          <div class="form-group" [ngClass]="buttonTextToggleClass">
-            <div class="input-group">
-              <input [(ngModel)]="name" id="form-title" class="form-control" placeholder="Form Title">
-            </div>
-            <div>
-               <button class="btn btn-outline-dark" style="margin: 20px" onclick="setTitle()"> Save</button>  
-            </div>
-          </div> -->
-          <div class="pressedButton">
-            <h4>{{title}}</h4>
-          </div>
-          <div *ngIf="!editTitle">
-            <button class="btn btn-outline-dark" style="margin: 20px" (click)="titleEdit()">Edit</button>
-          </div>
-          <div *ngIf="editTitle">
-            <div class="input-group">
-              <input [(ngModel)]="title" id="form-title" class="form-control" placeholder="Form Title">
-            </div>
-            <div>
-              <button class="btn btn-outline-dark" style="margin: 20px" (click)="setTitleFunction(title)"> Save</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr>
+<div class="mainPage" style="overflow-x: hidden;">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <h1><span href="#default">Saaransh - Next Gen Feedback Collection Portal</span></h1>
+      <span class="spacer"></span>
+      <button class="toolButton home"> <span>Home</span></button>
+      <button class="toolButton signout"> <span>Signout</span></button>
+    </mat-toolbar-row>
+  </mat-toolbar>
 
-      <button class="btn btn-outline-primary" style="margin: 20px" (click)="addQuestion(title)">Add Question</button>
-
-      <div *ngFor="let question of questions; index as i; trackBy: trackByFn">
-        <button class="accordion" (click)="accordianButtonClick($event)">Question {{i+1}}</button>
-        <div class="accordian-panel">
-          <div>
-            <h4>Question: {{question.name}}</h4>
-          </div>
-          <div *ngIf="!editQuestion[i]">
-            <button class="btn btn-outline-dark" style="margin: 20px" (click)="editQuestion[i] = true">Edit Question</button>
-          </div>
-          <div *ngIf="editQuestion[i]">
-            <div class="input-group">
-              <input [(ngModel)]="question.name" id="form-title" class="form-control" placeholder="Question">
-            </div>
-            <div>
-              <button class="btn btn-outline-dark" style="margin: 20px" (click)="editQuestionDetails(i,question.name)">
-                Save</button>
-            </div>
-          </div>
-          <div>
-            <h5>Question Type: {{question.type}}</h5>
-          </div>
-          <div *ngIf="!editQuestionType[i]">
-            <button class="btn btn-outline-dark" style="margin: 20px" (click)="editQuestionType[i] = true">Edit
-              Question
-              Type</button>
-          </div>
-          <div *ngIf="editQuestionType[i]">
-            <select class='select-option' required [(ngModel)]='question.type'>
-              <option class='option' *ngFor='let option of options' [value]="option">{{option}}</option>
-            </select>
-            <div>
-              <button class="btn btn-outline-dark" style="margin: 20px" (click)="editQuestionTypeDetails(i,question.type)">
-                Save</button>
-            </div>
-          </div>
-          <div>
-            <div *ngIf="question.type == 'Boolean'">
-              <h5> Answers:</h5>
-              <div *ngFor="let a of question.answer">
-                {{a}}
-              </div>
-            </div>
-          </div>
-          <div *ngIf="question.type == 'Text'">
-            <h5> Answers: Text </h5>
-          </div>
-
-          <div *ngIf="question.type == 'Multi-select'">
-            <h5> Answers: </h5>
-            <div *ngFor="let a of question.answer">
-                {{a}}
-              </div>
-            <input [(ngModel)]="multiselect" class="form-control" placeholder="Add Multi Select Value">
-            <button class="btn btn-outline-dark" style="margin: 20px" (click)="addMultiSelectOption(i,multiselect)"> Add</button>
-          </div>
-
-          <div *ngIf="question.type == 'Radio'">
-              <h5> Answers: </h5>
-              <div *ngFor="let a of question.answer">
-                  {{a}}
-                </div>
-              <input [(ngModel)]="multiselect" class="form-control" placeholder="Add Radio select Value">
-              <button class="btn btn-outline-dark" style="margin: 20px" (click)="addMultiSelectOption(i,multiselect)"> Add</button>
-            </div>
-
-        </div>
-      </div>
-
-    </ng-template>
-  </ngb-tab>
-</ngb-tabset>
+  <!-- <div style="padding: 0.5em">
+  <div class="col-md-6" style="text-align: center">
+    <button mat-raised-button color="warn" (click)="openCreateDialog()">Create New <i class="fa fa-plus"></i></button>
+  </div>
+  <div class="col-md-6" style="text-align: center">
+    <button mat-raised-button color="warn" (click)="openCopyDialog()">Copy From Existing <i class="fa fa-clipboard"></i></button>
+  </div>
+</div> -->
+  <mat-grid-list cols="2" rowHeight="80px">
+    <mat-grid-tile>
+      <button mat-raised-button color="warn" (click)="openCreateDialog()">Create New <i class="fa fa-plus"></i></button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-raised-button color="warn" (click)="openCopyDialog()">Copy From Existing <i class="fa fa-clipboard"></i></button>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <hr>
+  <div *ngFor="let survey of forms; index as i; trackBy: trackByFn">
+    <mat-grid-list cols="6" rowHeight="60px">
+      <mat-grid-tile>{{i+1}}</mat-grid-tile>
+      <mat-grid-tile>{{survey.name}}</mat-grid-tile>
+      <mat-grid-tile>
+        <button class="toolButton feedback"> <span>Feedbacks</span></button>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <button class="toolButton edit" [routerLink]="['/form', survey.id]"> <span>Edit</span></button>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <button class="toolButton delete"> <span>Delete</span></button>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <label class="switch">
+          <input type="checkbox">
+          <span class="slider round"></span>
+        </label>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>
+<mat-toolbar color="primary" class="footer">
+  <mat-toolbar-row>
+    <span class="example-spacer"></span>
+    <span>Handicrafted with <span style="color: red">&hearts;</span> by Swati Kanchan</span>
+  </mat-toolbar-row>
+</mat-toolbar>

@@ -1,4 +1,4 @@
-export class Surveys {
+export class Form {
     id: string;
     name: string;
 }
