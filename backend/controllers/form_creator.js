@@ -25,17 +25,12 @@ module.exports = {
 
     signin: async (req, res) => {
         let params = req.body
-<<<<<<< HEAD
         let creator = await FormCreator.findOne({username: params.username})
         console.log(creator)
         if(!creator){
             console.log("Username not found!");
             return res.status(404).json({success: false, error: "Username incorrect"});
         }
-=======
-        console.log(params,"Backend")
-        let creator = await FormCreator.findOne({username: params.username})
->>>>>>> Added services
         if(creator.password != params.password){
             console.log("Password incorrect")
             return res.status(404).json({success: false, error: "Password incorrect"})
