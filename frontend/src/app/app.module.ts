@@ -15,7 +15,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule, MatTableModule, MatGridListModule,MatSliderModule, MatStepperModule, MatExpansionModule, MatTabsModule, MatDatepickerModule, MatIconModule, MatButtonModule, MatCheckboxModule, MatToolbarModule, MatCardModule, MatFormFieldModule, MatInputModule, MatRadioModule, MatListModule, MatSelectModule, MatProgressSpinnerModule, } from '@angular/material';
 import { CopyFormComponent } from './components/copy-form/copy-form.component';
 import { SigninComponent } from './components/signin/signin.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -52,10 +51,5 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: [CreateFormComponent, CopyFormComponent]
-
-    FormsModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
 })
 export class AppModule { }
