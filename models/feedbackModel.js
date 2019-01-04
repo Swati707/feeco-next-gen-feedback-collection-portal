@@ -13,9 +13,7 @@ const Feedback = mongosse.models('Feedback', new mongosse.Schema({
 }));
 
 function validateFeedback(feedback) {
-    const feedbackSchema = {
-        
-    }
+    const feedbackSchema = {}
 
     return Joi.validate(feedback, feedbackSchema);
 }
