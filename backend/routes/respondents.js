@@ -1,17 +1,18 @@
-const express = require('express');
 const router = require('express-promise-router')();
+const respondentController = require('../controllers/respondent')
 
-router.use(express.json());
+// router.route('/all')
+//     .get(respondentController.getAllRespondents)
 
-router.route('/all')
-    .get();
+// router.route('/all/:formId')
+//     .get(respondentController.getAllRespondentsOneForm)
 
-router.route('/add')
-    .post()
+// router.route('/add')
+//     .post(respondentController.addRespondent)
 
-router.route('/:id')
-    .get()
-    .patch()
-    .delete()
+// router.route('/:id')
+//     .get(respondentController.getRespondent)
+//     .patch(respondentController.updateRespondent)
+//     .delete(respondentController.deleteRespondent)
     
 module.exports = router;

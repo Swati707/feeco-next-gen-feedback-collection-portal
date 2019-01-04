@@ -1,7 +1,5 @@
 const Joi = require('joi');
-const mongoose = require('mongoose');
-const {Form} = require('./form')
-const {Respondent} = require('./respondent')
+const mongoose = require('mongoose')
 
 const Response = mongoose.model('Response', new mongoose.Schema({
     form_id: {

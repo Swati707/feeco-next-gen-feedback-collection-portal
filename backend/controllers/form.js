@@ -96,8 +96,10 @@ module.exports = {
             return res.status(404).send("The form input is not valid")
         }
         let formCreator = await FormCreator.findById(form.form_creator)
-        formCreator.forms.pull(form)
-        await formCreator.save()
+        if(formCreator){
+            formCreator.forms.pull(form)
+            await formCreator.save()
+        }
         await Form.findByIdAndRemove(id)
         return res.status(201).json({success: true})
     },

@@ -43,4 +43,4 @@ function validateForm(form) {
     return Joi.validate(form, formSchema);
 }
 exports.Form = Form;
-// exports.validateForm = validateForm;
+exports.validateForm = validateForm;

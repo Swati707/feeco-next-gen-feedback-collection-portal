@@ -20,7 +20,12 @@ module.exports = {
 
     signin: async (req, res) => {
         let params = req.body
-        let creator = FormCreator.findOne({username: params.username})
+        let creator = await FormCreator.findOne({username: params.username})
+        console.log(creator)
+        if(!creator){
+            console.log("Username not found!");
+            return res.status(404).json({success: false, error: "Username incorrect"});
+        }
         if(creator.password != params.password){
             console.log("Password incorrect")
             return res.status(404).json({success: false, error: "Password incorrect"})
@@ -28,7 +33,7 @@ module.exports = {
         creator = creator.populate({path: "forms", model: "Form"}, (err) => {
             if(err){
                 console.log("Error while populating form forms");
-                return res.json({success: false, error: err});
+                return res.status(404).json({success: false, error: err});
             } else {
                 res.status(201).json({success: true, creator: creator})
             }
@@ -87,7 +92,6 @@ module.exports = {
             return res.status(404).send('The creator input is not valid')
         }
         formCreator.forms.forEach(async formId => {
-            console.log("check", formId)
             await Form.findByIdAndRemove(formId)
         });
         await FormCreator.findByIdAndRemove(id)

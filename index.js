@@ -35,13 +35,13 @@ const app = express();
 
 //routes
 const formsRoute = require('./backend/routes/forms')
-// const responsesRoute = require('./backend/routes/responses')
+const responsesRoute = require('./backend/routes/responses')
 const formCreatorRoute = require('./backend/routes/form_creators')
-// const respondentRoute = require('./backend/routes/respondents')
+const respondentRoute = require('./backend/routes/respondents')
 
-// app.use('/response', responsesRoute)
+app.use('/response', responsesRoute)
 app.use('/creator', formCreatorRoute)
-// app.use('/respondent', respondentRoute)
+app.use('/respondent', respondentRoute)
 app.use('/form', formsRoute)
 
 app.use('/a', (req, res) => {
