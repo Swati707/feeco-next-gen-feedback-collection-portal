@@ -1,0 +1,104 @@
+<div class="mainPage">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <h1><span href="#default">Saaransh - Next Gen Feedback Collection Portal</span></h1>
+      <span class="spacer"></span>
+      <button class="toolButton home"> <span>Home</span></button>
+      <button class="toolButton signout"> <span>Signout</span></button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-toolbar style="color: blue; background-color: aqua">
+    <mat-toolbar-row>
+      <span>Form Name</span>
+      <span class="spacer"></span>
+      <button class="toolButton addQuestion" (click)="addQuestion()"><span>Add Question</span></button>
+      <button class="toolButton settings"> <span> Form Settings</span></button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div style="width: 90%;" class="center">
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let q of questions">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Question
+          </mat-panel-title>
+          <mat-panel-description>
+            {{q.type ? q.type : 'Question Type'}}: {{q.name ? q.name : 'Question Name'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-vertical-stepper linear #stepper>
+          <mat-step [stepControl]="firstFormGroup">
+            <form>
+              <ng-template matStepLabel>Fill out Question title</ng-template>
+              <mat-form-field>
+                <input matInput placeholder="Question title" [(ngModel)]="q.name" name="question" required>
+              </mat-form-field>
+              <div>
+                <button mat-button matStepperNext>Next</button>
+              </div>
+            </form>
+          </mat-step>
+          <mat-step [stepControl]="secondFormGroup">
+            <form>
+              <ng-template matStepLabel>Select Question Type</ng-template>
+              <mat-select placeholder="Question Type" style="width: 300px " [(ngModel)]="q.type" [ngModelOptions]="{standalone: true}">
+                <mat-option *ngFor="let type of questionTypes" [value]="type.name">
+                  {{type.name}}
+                </mat-option>
+              </mat-select>
+            </form>
+            <div style="padding:0.4em"></div>
+            <div *ngIf="q.type == 'Single Select' || q.type == 'Multi Select'">
+              <div style=" padding:0.5em">
+                <mat-list *ngFor="let option of options">
+                  <mat-list-item> {{option}} </mat-list-item>
+                </mat-list>
+              </div>
+              <ng-template>Add options for Single select</ng-template>
+              <mat-form-field>
+                <input matInput placeholder="Option Name" [(ngModel)]="option">
+              </mat-form-field>
+              <button mat-button (click)="addOption(q)">Add</button>
+            </div>
+            <div *ngIf="q.type == 'Number Rating'">
+              <ng-template>Add options for Number Ratings</ng-template>
+              <div>
+                <mat-form-field>
+                  <input matInput placeholder="Min Value of Rating" [(ngModel)]="minRating" required>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field>
+                  <input matInput placeholder="Max Value of Rating" [(ngModel)]="maxRating" required>
+                </mat-form-field>
+              </div>
+            </div>
+            <div style="padding-top: 20px">
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </mat-step>
+          <mat-step state="done">
+            <ng-template matStepperIcon="done">
+              <mat-icon>check_box</mat-icon>
+            </ng-template>
+            <ng-template matStepLabel>Done</ng-template>
+          </mat-step>
+        </mat-vertical-stepper>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <div class="center" style="text-align: -webkit-center">
+      <button class="toolButton addQuestion" style="width: 150px;
+    height: 40px; " (click)="addQuestion()"> <span>Add
+          Question</span></button>
+    </div>
+  </div>
+</div>
+<mat-toolbar color="primary" class="footer">
+  <mat-toolbar-row>
+    <span class="example-spacer"></span>
+    <span>Handicrafted with <span style="color: red">&hearts;</span> by Swati Kanchan</span>
+  </mat-toolbar-row>
+</mat-toolbar>
