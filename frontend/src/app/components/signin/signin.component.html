@@ -1,0 +1,102 @@
+<div class="mainPage">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <h1><span href="#default">Saaransh - Next Gen Feedback Collection Portal</span></h1>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div style="padding: 1cm">
+    <div *ngIf="registered" class="center">
+      <span style="color: blue"> You have been registered successfully.<br> Please sign in to get into dashboard</span>
+    </div>
+    <div class="center">
+      <mat-tab-group color="primary" backgroundColor="accent" mat-align-tabs="center">
+        <mat-tab label="Sign In">
+          <mat-card class="sign-in-card">
+            <mat-card-content style="text-align: -webkit-center">
+              <form class="formClass">
+                <div>
+                  <mat-form-field style="width:450px">
+                    <mat-label>Email</mat-label>
+                    <input matInput [(ngModel)]="username" name="email" required>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field style="width:450px">
+                    <mat-label>Password</mat-label>
+                    <input matInput [(ngModel)]="password" type="password" type="password" name="password" required>
+                  </mat-form-field>
+                </div>
+              </form>
+              <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+            </mat-card-content>
+            <mat-card-actions class="center">
+              <button mat-raised-button (click)="signin()" color="primary">Login</button>
+            </mat-card-actions>
+          </mat-card>
+        </mat-tab>
+        <mat-tab label="Sign Up">
+          <mat-card class="sign-up-card">
+            <mat-card-content style="text-align: -webkit-center">
+              <form class="formClassRegister">
+                <div>
+                  <mat-form-field style="width:450px">
+                    <mat-label>First Name</mat-label>
+                    <input matInput placeholder="First name" name="fname" required>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field style="width:450px">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput placeholder="Last Name" name="lname" required>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field style="width:450px">
+                    <mat-label>Address</mat-label>
+                    <input matInput placeholder="Address" name="address" required>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field style="width:450px">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Email" name="email">
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field style="width:450px">
+                    <mat-label>Password</mat-label>
+                    <input matInput placeholder="Password" name="password">
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field>
+                    <mat-label>Mobile Number</mat-label>
+                    <input matInput placeholder="Mobile Number" name="Mobile Number">
+                  </mat-form-field>
+                  &nbsp;&nbsp;&nbsp;
+                  <mat-form-field>
+                    <mat-label>Date of Birth</mat-label>
+                    <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </form>
+            </mat-card-content>
+            <mat-card-actions class="center">
+              <button mat-raised-button (click)="signup()" color="primary">REGISTER</button>
+            </mat-card-actions>
+          </mat-card>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
+<mat-toolbar color="primary" class="footer">
+    <mat-toolbar-row >
+      <span class="example-spacer"></span>
+      <span>Handicrafted with <span style="color: red">&hearts;</span> by Swati Kanchan</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  
