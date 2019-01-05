@@ -20,75 +20,75 @@
 
   <div style="width: 90%;" class="center">
     <mat-accordion>
-      <mat-expansion-panel *ngFor="let q of questions">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Question
-          </mat-panel-title>
-          <mat-panel-description>
-            {{q.question_type  ? q.question_type : 'Question Type'}}: {{q.question ? q.question : 'Question Name'}}
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <mat-vertical-stepper linear #stepper>
-          <mat-step [stepControl]="firstFormGroup">
-            <form>
-              <ng-template matStepLabel>Fill out Question title</ng-template>
-              <mat-form-field>
-                <input matInput placeholder="Question title" [(ngModel)]="q.question" name="question" required>
-              </mat-form-field>
-              <!-- <div>
+      <div *ngFor="let q of questions">
+        <mat-expansion-panel [expanded]="q.done">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Question
+            </mat-panel-title>
+            <mat-panel-description>
+              {{q.question_type ? q.question_type : 'Question Type'}}: {{q.question ? q.question : 'Question Name'}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <mat-vertical-stepper linear #stepper>
+            <mat-step [stepControl]="firstFormGroup">
+              <form>
+                <ng-template matStepLabel>Fill out Question title</ng-template>
+                <mat-form-field style="width: 100%">
+                  <input matInput placeholder="Question title" [(ngModel)]="q.question" name="question" required>
+                </mat-form-field>
+                <!-- <div>
                 <button mat-button matStepperNext>Next</button>
               </div> -->
-            </form>
-          </mat-step>
-          <mat-step [stepControl]="secondFormGroup">
-            <form>
-              <ng-template matStepLabel>Select Question Type</ng-template>
-              <mat-select placeholder="Question Type" style="width: 300px " [(ngModel)]="q.question_type" [ngModelOptions]="{standalone: true}">
-                <mat-option *ngFor="let type of questionTypes" [value]="type.name">
-                  {{type.name}}
-                </mat-option>
-              </mat-select>
-            </form>
-            <div style="padding:0.4em"></div>
-            <div *ngIf="q.question_type  == 'Single Select' || q.question_type  == 'Multi Select'">
-              <div style=" padding:0.5em">
-                <mat-list *ngFor="let option of q.possible_answers">
-                  <mat-list-item> {{option}} </mat-list-item>
-                </mat-list>
-              </div>
-              <ng-template>Add options for Single select</ng-template>
-              <mat-form-field>
-                <input matInput placeholder="Option Name" [(ngModel)]="option">
-              </mat-form-field>
-              <button mat-button (click)="addOption(q.possible_answers)">Add</button>
-            </div>
-            <div *ngIf="q.question_type == 'Number Rating'">
-              <ng-template>Add options for Number Ratings</ng-template>
-              <div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup" >
+              <form>
+                <ng-template matStepLabel>Select Question Type</ng-template>
+                <mat-select placeholder="Question Type" style="width: 300px " [(ngModel)]="q.question_type"
+                  [ngModelOptions]="{standalone: true}">
+                  <mat-option *ngFor="let type of questionTypes" [value]="type.name">
+                    {{type.name}}
+                  </mat-option>
+                </mat-select>
+              </form>
+              <div style="padding:0.4em"></div>
+              <div *ngIf="q.question_type  == 'Single Select' || q.question_type  == 'Multi Select'">
+                <div style=" padding:0.5em">
+                  <mat-list *ngFor="let option of q.possible_answers">
+                    <mat-list-item> {{option}} </mat-list-item>
+                  </mat-list>
+                </div>
+                <ng-template>Add options for Single select</ng-template>
                 <mat-form-field>
-                  <input matInput placeholder="Min Value of Rating" [(ngModel)]="minRating" required>
+                  <input matInput placeholder="Option Name" [(ngModel)]="option">
                 </mat-form-field>
+                <button mat-button (click)="addOption(q.possible_answers)">Add</button>
               </div>
-              <div>
-                <mat-form-field>
-                  <input matInput placeholder="Max Value of Rating" [(ngModel)]="maxRating" required>
-                </mat-form-field>
+              <div *ngIf="q.question_type == 'Number Rating'">
+                <ng-template>Add options for Number Ratings</ng-template>
+                <div>
+                  <mat-form-field>
+                    <input matInput placeholder="Min Value of Rating" [(ngModel)]="minRating" required>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field>
+                    <input matInput placeholder="Max Value of Rating" [(ngModel)]="maxRating" required>
+                  </mat-form-field>
+                </div>
               </div>
-            </div>
-            <!-- <div style="padding-top: 20px">
+              <!-- <div style="padding-top: 20px">
               <button mat-button matStepperPrevious>Back</button>
               <button mat-button matStepperNext (click)="updateQuestion()">Next</button>
             </div> -->
-          </mat-step>
-          <mat-step state="done">
-            <ng-template matStepperIcon="done">
-              <mat-icon>check_box</mat-icon>
-            </ng-template>
-            <ng-template matStepLabel>Done</ng-template>
-          </mat-step>
-        </mat-vertical-stepper>
-      </mat-expansion-panel>
+            </mat-step>
+            <mat-step state="done">
+              <ng-template matStepLabel><button mat-stroked-button color="warn" color="primary" (click)="done(q)">Done!</button></ng-template>
+            </mat-step>
+          </mat-vertical-stepper>
+        </mat-expansion-panel>
+      </div>
     </mat-accordion>
     <div class="center" style="text-align: -webkit-center">
       <button class="toolButton addQuestion" style="width: 150px;
