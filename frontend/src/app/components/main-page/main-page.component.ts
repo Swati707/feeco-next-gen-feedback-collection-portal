@@ -1,22 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { Form } from '../../models/form';
-import { MatDialog, MatDialogConfig } from "@angular/material";
+import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig  } from "@angular/material";
 import { CreateFormComponent } from '../../components/create-form/create-form.component';
 import { CopyFormComponent } from '../../components/copy-form/copy-form.component';
 import { LocalStorageService } from 'angular-web-storage';
 import { FormService } from '../../services/form.service';
 import { FormCreatorService } from '../../services/form-creator.service';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'main-page',
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.css']
 })
+
+
 export class MainPageComponent implements OnInit {
 
   forms: Array<Form> = [];
   form_creator: String
-  constructor(private dialog: MatDialog, private formCreatorService: FormCreatorService, public localStorage: LocalStorageService, private fromService: FormService) {
+  constructor(public snackBar: MatSnackBar, private dialog: MatDialog, private router: Router, private formCreatorService: FormCreatorService, public localStorage: LocalStorageService, private fromService: FormService) {
   }
 
   ngOnInit() {
@@ -26,6 +29,34 @@ export class MainPageComponent implements OnInit {
     this.getAllForms(this.form_creator)
   }
 
+  openFormAddedSnackBar(form) {
+    this.snackBar.open(form + " added successfully",null, {
+      duration: 2000,
+    });
+  }
+
+  openFormDeletedSnackBar() {
+    this.snackBar.open("form  deleted successfully",null, {
+      duration: 2000,
+    });
+  }
+
+  openStatusSnackBar(form, status) {
+    let msg : String;
+    if( status == true){
+      msg = "activated"
+    }
+    else{
+      msg = "deactivated"
+    }
+
+    this.snackBar.open(form +" is successfully " + msg ,null, {
+      duration: 2000,
+    });
+  }
+
+  
+  
   openCreateDialog() {
 
     const dialogConfig = new MatDialogConfig();
@@ -44,6 +75,8 @@ export class MainPageComponent implements OnInit {
           "name": data.title,
           "form_creator": this.form_creator
         }
+
+        this.openFormAddedSnackBar(formTitle.name);
         this.fromService.addForm(formTitle).subscribe(
           data => {
             console.log(data, "form creation")
@@ -105,6 +138,7 @@ export class MainPageComponent implements OnInit {
     this.fromService.deleteForm(id).subscribe(
       data => {
         this.getAllForms(this.form_creator);
+        this.openFormDeletedSnackBar();
       }
     )
   }
@@ -124,6 +158,13 @@ export class MainPageComponent implements OnInit {
             console.log(forms)
             this.localStorage.set('forms', forms)
           })
+        this.openStatusSnackBar(form.name, form.active_status);
       })
+  }
+
+  signout(){
+    this.localStorage.remove('form_creator')
+    this.localStorage.remove('forms')
+    this.router.navigate(['']);
   }
 }

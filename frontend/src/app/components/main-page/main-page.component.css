@@ -10,7 +10,7 @@
   z-index: 3000;
   bottom: 0;
   left: 0;
-  position: relative;
+  position: static;
   clear: both;
 }
 
@@ -217,7 +217,7 @@ input:checked+.slider:before {
 
 .toolButton.signout span:after {
   font-family: FontAwesome;
-  content: "\f2f5";
+  content: "\f057";
   position: absolute;
   opacity: 0;
   top: 0;
