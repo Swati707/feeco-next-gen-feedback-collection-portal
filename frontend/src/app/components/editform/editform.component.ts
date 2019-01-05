@@ -91,7 +91,7 @@ export class EditformComponent implements OnInit {
     )
   }
 
-  updateQuestion() {
+  saveForm() {
     this.form.questions = this.questions
     this.localStorage.set('forms', JSON.stringify(this.form))
     this.fromService.updateForm(this.form_id, this.form).subscribe(

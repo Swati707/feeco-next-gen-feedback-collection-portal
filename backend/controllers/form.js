@@ -10,7 +10,7 @@ module.exports = {
         let newForm = new Form({
             name: req.body.name,
             form_creator: req.body.form_creator,
-            questions: [],
+            questions: req.body.questions,
             html_body: "Add some questions!"
         });
 
