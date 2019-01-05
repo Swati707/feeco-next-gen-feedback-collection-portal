@@ -31,4 +31,7 @@ export class ResponseComponent implements OnInit {
   ngOnInit() {
   }
 
+  formatLabel(value: number | null) {
+    return value;
+  }
 }

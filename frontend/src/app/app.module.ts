@@ -47,8 +47,8 @@ import { ResponseComponent } from './components/response/response.component';
     MatInputModule, MatTableModule,
     MatButtonModule, MatGridListModule,
     MatRadioModule, MatSelectModule, MatListModule, MatSnackBarModule,
-    MatCardModule, MatExpansionModule, MatStepperModule, MatSliderModule,
-    MatProgressSpinnerModule, MatTabsModule, MatNativeDateModule, MatDatepickerModule, MatIconModule,
+    MatCardModule, MatExpansionModule, MatCheckboxModule, MatStepperModule, MatSliderModule,
+    MatProgressSpinnerModule, MatCheckboxModule, MatTabsModule, MatNativeDateModule, MatDatepickerModule, MatIconModule,
     MatCheckboxModule, MatToolbarModule,
     RouterModule.forRoot([
       { path: '', component: SigninComponent },
