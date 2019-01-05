@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormService } from '../../services/form.service';
 import { FormCreatorService } from '../../services/form-creator.service';
 import { LocalStorageService } from 'angular-web-storage';
+import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: 'editform',
@@ -29,11 +30,10 @@ export class EditformComponent implements OnInit {
   form
   creator_id
   sliderValue = 0;
-  constructor(private formCreatorService: FormCreatorService, public localStorage: LocalStorageService, private fromService: FormService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
+  constructor(public snackBar: MatSnackBar, private formCreatorService: FormCreatorService, public localStorage: LocalStorageService, private fromService: FormService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
     this.route.params.subscribe(params => {
       this.form_id = params['_id']
     })
-
     this.fromService.getForm(this.form_id).subscribe(
       data => {
         this.form = data.form
@@ -71,6 +71,18 @@ export class EditformComponent implements OnInit {
   ngOnInit() {
   }
 
+  openQuestionAddedSnackBar(question) {
+    this.snackBar.open(question + " is added to current form",null, {
+      duration: 2000,
+    });
+  }
+
+  openFormSavedSnackBar(form) {
+    this.snackBar.open(form + " is updated and saved to server",null, {
+      duration: 2000,
+    });
+  }
+
   addOption(possible_answers) {
     if (this.option) {
       console.log("possible_answers", possible_answers)
@@ -86,7 +98,7 @@ export class EditformComponent implements OnInit {
       question_type: null,
       possible_answers: [],
       question_number: this.questions.length + 1,
-      done:false
+      done: false
     }
     )
   }
@@ -104,10 +116,12 @@ export class EditformComponent implements OnInit {
             console.log(forms)
             this.localStorage.set('forms', forms)
           })
+          this.openFormSavedSnackBar(this.form.name)
+
       })
   }
 
-  done(q){
-    q.done = true;
+  done(q) {
+    this.openQuestionAddedSnackBar(q.question)
   }
 }
