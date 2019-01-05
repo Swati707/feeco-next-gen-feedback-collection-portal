@@ -85,7 +85,8 @@ export class EditformComponent implements OnInit {
       question: null,
       question_type: null,
       possible_answers: [],
-      question_number: this.questions.length + 1
+      question_number: this.questions.length + 1,
+      done:false
     }
     )
   }
@@ -104,5 +105,9 @@ export class EditformComponent implements OnInit {
             this.localStorage.set('forms', forms)
           })
       })
+  }
+
+  done(q){
+    q.done = true;
   }
 }
