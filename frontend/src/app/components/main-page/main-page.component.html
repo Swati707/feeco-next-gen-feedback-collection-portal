@@ -31,11 +31,10 @@
         <button class="toolButton delete" (click)= "deleteForm(form._id)"> <span>Delete</span></button>
       </mat-grid-tile>
       <mat-grid-tile>
-        <!-- <label class="switch">
-          <input type="checkbox" (click)="formState(form)">
+        <label class="switch">
+          <input type="checkbox" [(ngModel)]="form.active_status" [checked]="form.active_status" (click)="formState(form)" >
           <span class="slider round"></span>
-        </label> -->
-        <mat-slide-toggle [checked]="form.active_status" (change)="formState(form, $event)"></mat-slide-toggle>
+        </label>
       </mat-grid-tile>
     </mat-grid-list>
   </div>
