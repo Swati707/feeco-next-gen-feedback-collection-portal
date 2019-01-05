@@ -1,3 +1,61 @@
-<p>
-  response works!
-</p>
+<mat-toolbar style="color: blue; background-color: aqua">
+  <mat-toolbar-row>
+    <span>{{form_name}}</span>
+    <span class="spacer"></span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div *ngFor="let q of questions" class="center">
+  <div *ngIf="q.question_type == 'Text'">
+    <mat-card style="text-align: left">
+      <mat-card-title>{{q.question}}</mat-card-title>
+      <mat-form-field style="width: 100%">
+        <input matInput placeholder="Enter Answer">
+      </mat-form-field>
+    </mat-card>
+  </div>
+
+  <div *ngIf="q.question_type == 'Multi Select'">
+    <mat-card style="text-align: left">
+      <mat-card-title>{{q.question}}</mat-card-title>
+      <div *ngFor="let ans of q.possible_answers">
+        <mat-checkbox>{{ans}}</mat-checkbox>
+      </div>
+    </mat-card>
+  </div>
+
+  <div *ngIf="q.question_type == 'Single Select'">
+    <mat-card style="text-align: left">
+      <mat-card-title>{{q.question}}</mat-card-title>
+      <mat-form-field>
+        <mat-select placeholder="select your choice">
+          <mat-option *ngFor="let ans of q.possible_answers">
+            {{ans}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card>
+  </div>
+
+  <div *ngIf="q.question_type == 'Number Rating'">
+    <mat-card style="text-align: left">
+      <div>{{q.question}}</div>
+      <mat-slider style="width: 50%;" thumbLabel [displayWith]="formatLabel" tickInterval="1" min="1" max="10"></mat-slider>
+    </mat-card>
+
+  </div>
+
+  <div *ngIf="q.question_type == 'Number'">
+    <mat-card style="text-align: left">
+      <mat-card-title>{{q.question}}</mat-card-title>
+      <mat-form-field style="width: 100%">
+        <input matInput placeholder="Enter Answer in numbers">
+      </mat-form-field>
+    </mat-card>
+  </div>
+</div>
+
+<div class="center" style="text-align: -webkit-center">
+  <button class="toolButton addQuestion" style="width: 150px;
+    height: 40px; " (click)="addQuestion()"> <span>Submit Response</span></button>
+</div>
