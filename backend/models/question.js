@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-var questionSchema = new mongoose.Schema({
+const questionSchema = new mongoose.Schema({
     question: String, 
     question_type: String, 
     possible_answers: [{
@@ -9,4 +9,4 @@ var questionSchema = new mongoose.Schema({
     question_number: Number
 })
 
-exports.QuestionSchema = questionSchema
+exports.module = questionSchema
