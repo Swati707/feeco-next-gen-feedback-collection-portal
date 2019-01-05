@@ -19,6 +19,7 @@ import { FormCreatorService } from "./services/form-creator.service"
 import { FormService } from "./services/form.service"
 import { HttpClientModule } from '@angular/common/http';
 import { AngularWebStorageModule } from 'angular-web-storage';
+import { ResponseComponent } from './components/response/response.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { AngularWebStorageModule } from 'angular-web-storage';
     CreateFormComponent,
     CopyFormComponent,
     SigninComponent,
+    ResponseComponent,
   ],
   imports: [
     NgbModule,
@@ -52,7 +54,7 @@ import { AngularWebStorageModule } from 'angular-web-storage';
       { path: '', component: SigninComponent },
       { path: 'creator', component: MainPageComponent },
       { path: 'form/:_id', component: EditformComponent },
-      // {path: '**', component: NotFoundComponent },
+       {path: 'response/:_id', component: ResponseComponent },
     ])
   ],
   providers: [FormCreatorService, FormService],
