@@ -68,6 +68,20 @@ export class MainPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       data => {
         console.log("Dialog output:", data);
+        this.fromService.getForm(data.copyFormId).subscribe( 
+          copied_form => {
+            let newForm = {
+              name: data.title,
+              form_creator: copied_form.form.form_creator,
+              questions: copied_form.form.questions
+            }
+            this.fromService.addForm(newForm).subscribe(
+              data => {
+                console.log(data, "form created")
+                this.getAllForms(this.form_creator)
+              }
+            )
+          })
         // this.forms.push({
         //   id: data.copyFormId,
         //   name: data.title

@@ -13,6 +13,7 @@
       <span>{{form_name}}</span>
       <span class="spacer"></span>
       <button class="toolButton addQuestion" (click)="addQuestion()"><span>Add Question</span></button>
+      <button class="toolButton addQuestion" (click)="saveForm()"><span>Save</span></button>
       <button class="toolButton settings"> <span> Form Settings</span></button>
     </mat-toolbar-row>
   </mat-toolbar>
@@ -35,9 +36,9 @@
               <mat-form-field>
                 <input matInput placeholder="Question title" [(ngModel)]="q.question" name="question" required>
               </mat-form-field>
-              <div>
+              <!-- <div>
                 <button mat-button matStepperNext>Next</button>
-              </div>
+              </div> -->
             </form>
           </mat-step>
           <mat-step [stepControl]="secondFormGroup">
@@ -75,10 +76,10 @@
                 </mat-form-field>
               </div>
             </div>
-            <div style="padding-top: 20px">
+            <!-- <div style="padding-top: 20px">
               <button mat-button matStepperPrevious>Back</button>
               <button mat-button matStepperNext (click)="updateQuestion()">Next</button>
-            </div>
+            </div> -->
           </mat-step>
           <mat-step state="done">
             <ng-template matStepperIcon="done">
