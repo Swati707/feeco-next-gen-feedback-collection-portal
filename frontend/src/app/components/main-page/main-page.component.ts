@@ -95,9 +95,11 @@ export class MainPageComponent implements OnInit {
     )
   }
 
-  formState(form, e) {
-    console.log(form.active_status, e)
-    form.active_status = e.checked;
+  formState(form) {
+    // console.log(form.active_status, e)
+    // form.active_status = e.checked;
+    form.active_status = !form.active_status
+    console.log(form.active_status)
     this.fromService.updateForm(form._id, form).subscribe(
       data => {
         console.log(data, "update form");
