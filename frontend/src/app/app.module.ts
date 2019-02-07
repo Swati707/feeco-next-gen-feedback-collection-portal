@@ -20,6 +20,7 @@ import { FormService } from "./services/form.service"
 import { HttpClientModule } from '@angular/common/http';
 import { AngularWebStorageModule } from 'angular-web-storage';
 import { ResponseComponent } from './components/response/response.component';
+import { ResponseViewComponent } from './components/response-view/response-view.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { ResponseComponent } from './components/response/response.component';
     CopyFormComponent,
     SigninComponent,
     ResponseComponent,
+    ResponseViewComponent,
   ],
   imports: [
     NgbModule,
@@ -54,7 +56,8 @@ import { ResponseComponent } from './components/response/response.component';
       { path: '', component: SigninComponent },
       { path: 'creator', component: MainPageComponent },
       { path: 'form/:_id', component: EditformComponent },
-       {path: 'response/:_id', component: ResponseComponent },
+      { path: 'response/:_id', component: ResponseComponent },
+      { path: 'response_view/:_id', component: ResponseViewComponent}
     ])
   ],
   providers: [FormCreatorService, FormService],

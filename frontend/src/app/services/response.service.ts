@@ -11,6 +11,7 @@ export class ResponseService {
 
   addResponse(response_details){
     const body = JSON.stringify(response_details)
+    console.log(body)
     return this.http.post<any>('http://localhost:3000/response/add', body , this.options);
   }
 

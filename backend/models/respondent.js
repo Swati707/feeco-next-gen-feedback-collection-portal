@@ -5,7 +5,7 @@ const {Response} = require('./response');
 const Respondent = mongoose.model('Respondent', new mongoose.Schema({
     email : {
         type: String,
-        required: true
+        required: false
     },
     responses : [{
         type: mongoose.Schema.Types.ObjectId,
