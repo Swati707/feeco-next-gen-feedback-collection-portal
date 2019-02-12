@@ -78,7 +78,6 @@ module.exports = {
         return res.status(200).json({success: true, responses: responses})
     },
 
-    updateResponse: async (req, res) => {
-
+    updateResponse: async (req, res) => {    
     }
 }

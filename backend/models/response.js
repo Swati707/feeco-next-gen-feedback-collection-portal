@@ -23,7 +23,7 @@ const Response = mongoose.model('Response', new mongoose.Schema({
         },
         answer: {
             type: String,
-            required: true
+            required: false
         }
     }]
 }));
