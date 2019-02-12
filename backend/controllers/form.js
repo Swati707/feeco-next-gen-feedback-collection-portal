@@ -40,7 +40,7 @@ module.exports = {
         if(!forms){
             return res.status(404).send("Not found")
         }
-        res.status(200).json({forms: forms})
+        res.status(200).json({success: true, forms: forms})
     },
 
     getForm: async (req, res, next) => {
