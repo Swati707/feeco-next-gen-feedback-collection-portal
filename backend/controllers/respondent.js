@@ -1,7 +1,7 @@
 const { Respondent, validateRespondent } = require('../models/respondent')
 const { Response, validateResponse } = require('../models/response')
 
-exports.module = {
+module.exports = {
     addRespondent: async (req, res) => {
         let newRespondent = new Respondent({
             email: req.body.email,

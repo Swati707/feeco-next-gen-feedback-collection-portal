@@ -7,8 +7,8 @@ const respondentController = require('../controllers/respondent')
 // router.route('/all/:formId')
 //     .get(respondentController.getAllRespondentsOneForm)
 
-// router.route('/add')
-//     .post(respondentController.addRespondent)
+router.route('/add')
+    .post(respondentController.addRespondent)
 
 // router.route('/:id')
 //     .get(respondentController.getRespondent)
