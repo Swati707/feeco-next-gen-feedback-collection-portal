@@ -1,0 +1,106 @@
+.mainPage {
+  height: calc(100vh - 65px);
+  width: auto;
+  overflow-y: scroll;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.center {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+.mat-button,
+.mat-raised-button {
+  background-color: whitesmoke;
+}
+
+.toolButton.home {
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 14px;
+  padding: 5px;
+  width: 130px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+
+.toolButton.signout {
+  border-radius: 4px;
+  background-color: #1e8df4;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 14px;
+  padding: 5px;
+  width: 130px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.toolButton span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.toolButton.signout span:after {
+  font-family: FontAwesome;
+  content: "\f2f5";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.mainPage {
+  height: calc(100vh - 64px);
+  width: auto
+}
+
+
+.toolButton.home span:after {
+  font-family: FontAwesome;
+  content: "\f015";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.toolButton:hover span {
+  padding-right: 25px;
+}
+
+.toolButton:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.footer {
+
+  width: 100%;
+  height: 50px;
+  z-index: 3000;
+  bottom: 0;
+  left: 0;
+  position: static;
+  clear: both;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}

@@ -21,6 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularWebStorageModule } from 'angular-web-storage';
 import { ResponseComponent } from './components/response/response.component';
 import { ResponseViewComponent } from './components/response-view/response-view.component';
+import { FormSettingsComponent } from './components/form-settings/form-settings.component';
+import { VerifyOtpComponent } from './components/verify-otp/verify-otp.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { ResponseViewComponent } from './components/response-view/response-view.
     SigninComponent,
     ResponseComponent,
     ResponseViewComponent,
+    FormSettingsComponent,
+    VerifyOtpComponent,
   ],
   imports: [
     NgbModule,
@@ -57,11 +61,12 @@ import { ResponseViewComponent } from './components/response-view/response-view.
       { path: 'creator', component: MainPageComponent },
       { path: 'form/:_id', component: EditformComponent },
       { path: 'response/:_id', component: ResponseComponent },
-      { path: 'response_view/:_id', component: ResponseViewComponent}
+      { path: 'response_view/:_id', component: ResponseViewComponent},
+      { path: 'form_settings/:_id', component: FormSettingsComponent}
     ])
   ],
   providers: [FormCreatorService, FormService],
   bootstrap: [AppComponent],
-  entryComponents: [CreateFormComponent, CopyFormComponent]
+  entryComponents: [CreateFormComponent, CopyFormComponent, VerifyOtpComponent]
 })
 export class AppModule { }

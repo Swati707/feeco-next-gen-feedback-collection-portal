@@ -4,6 +4,8 @@ import { FormService } from '../../services/form.service';
 import { FormCreatorService } from '../../services/form-creator.service';
 import { ResponseService } from '../../services/response.service';
 import { LocalStorageService } from 'angular-web-storage';
+import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig } from "@angular/material";
+import { VerifyOtpComponent } from '../../components/verify-otp/verify-otp.component';
 
 @Component({
   selector: 'response',
@@ -23,7 +25,7 @@ export class ResponseComponent implements OnInit {
 
   answers = []
 
-  constructor(private responseService: ResponseService, private formCreatorService: FormCreatorService, public localStorage: LocalStorageService, private fromService: FormService, private route: ActivatedRoute, private router: Router) {
+  constructor(private responseService: ResponseService, private dialog: MatDialog, private formCreatorService: FormCreatorService, public localStorage: LocalStorageService, private fromService: FormService, private route: ActivatedRoute, private router: Router) {
     this.route.params.subscribe(params => {
       this.form_id = params['_id']
     })
@@ -44,6 +46,12 @@ export class ResponseComponent implements OnInit {
   }
 
   ngOnInit() {
+
+  }
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.openOtpDialog()
+    });
   }
 
   formatLabel(value: number | null) {
@@ -54,18 +62,33 @@ export class ResponseComponent implements OnInit {
     console.log(this.answers)
     let submit_answers = []
     for (let i in this.answers) {
-      if (typeof this.answers[i] == 'string' ) {
+      if (typeof this.answers[i] == 'string' && this.answers[i]) {
         let a = {
           question_id: i,
           answer: this.answers[i]
         }
         submit_answers.push(a)
       }
+      if (typeof this.answers[i] == "object"  && this.answers[i].size != 0) {
+        let a = {
+          question_id: i,
+          answer: Array.from(this.answers[i]).toString()
+        }
+        submit_answers.push(a)
+      }
+      if (typeof this.answers[i] == "number"  && this.answers[i]) {
+        let a = {
+          question_id: i,
+          answer: this.answers[i].toString()
+        }
+        submit_answers.push(a)
+      }
+
     }
     console.log(submit_answers)
     let response = {
       form_id: this.form_id,
-      email: "anonymous",
+      email: "anonymo",
       answers: submit_answers
     }
     let result = this.responseService.addResponse(response).subscribe(
@@ -90,5 +113,28 @@ export class ResponseComponent implements OnInit {
       this.answers[q].delete(ans)
     }
     console.log(this.answers[q])
+  }
+
+  openOtpDialog() {
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.hasBackdrop = true;
+    dialogConfig.minWidth = '500px';
+    // dialogConfig.data = this.forms;
+    console.log(dialogConfig)
+    const dialogRef = this.dialog.open(VerifyOtpComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      data => {
+        console.log("Dialog output:", data);
+        // this.forms.push({
+        //   id: data.copyFormId,
+        //   name: data.title
+        // });
+      });
+
   }
 }

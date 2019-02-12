@@ -14,7 +14,7 @@
       <span class="spacer"></span>
       <button class="toolButton addQuestion" (click)="addQuestion()"><span>Add Question</span></button>
       <button class="toolButton addQuestion" (click)="saveForm()"><span>Save</span></button>
-      <button class="toolButton settings"> <span> Form Settings</span></button>
+      <button class="toolButton settings" [routerLink]="['/form_settings', form_id]"> <span> Form Settings</span></button>
     </mat-toolbar-row>
   </mat-toolbar>
 

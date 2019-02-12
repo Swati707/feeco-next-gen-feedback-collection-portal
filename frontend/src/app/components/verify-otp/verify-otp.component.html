@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>OTP verification</h2>
+
+<mat-dialog-content [formGroup]="otpform">
+
+  <mat-form-field style="width:450px !important">
+    <input matInput placeholder="Enter the OTP to submit the feedback" formControlName="otp">
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button class="mat-raised-button" (click)="submit()">Submit</button>
+</mat-dialog-actions>

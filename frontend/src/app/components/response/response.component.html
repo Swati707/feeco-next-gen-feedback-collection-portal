@@ -39,7 +39,7 @@
 
   <div *ngIf="q.question_type == 'Number Rating'">
     <mat-card style="text-align: left">
-      <div>{{q.question}}</div>
+      <div>{{q.question}}</div> <div>{{answers[q._id]}}</div>
       <mat-slider style="width: 50%;" [(ngModel)]="answers[q._id]" thumbLabel [displayWith]="formatLabel" tickInterval="1" min="1" max="10"></mat-slider>
     </mat-card>
 
