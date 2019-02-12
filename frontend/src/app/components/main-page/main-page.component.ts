@@ -1,60 +1,62 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Form } from '../../models/form';
-import { Questions } from '../../models/questions';
-import { MatDialog, MatDialogConfig } from "@angular/material";
+import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig  } from "@angular/material";
 import { CreateFormComponent } from '../../components/create-form/create-form.component';
 import { CopyFormComponent } from '../../components/copy-form/copy-form.component';
-
+import { LocalStorageService } from 'angular-web-storage';
+import { FormService } from '../../services/form.service';
+import { FormCreatorService } from '../../services/form-creator.service';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'main-page',
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.css']
 })
+
+
 export class MainPageComponent implements OnInit {
 
-  closeResult: string;
-  // disableCreatePage: boolean = false;
   forms: Array<Form> = [];
-  newFormCreateTitle: string = "";
-  //buttonTextToggleClass: string = "hide";
-  //buttonButtonToggleClass: string = "show";
-  //title = "Feedback CS 101";
-  //editTitle = false;
-  //editQuestion = [];
-  //editQuestionType = [];
-  //questions: Array<Questions> = [];
-  //questions_len = 0
-  //multiselect = null;
-  //options = ['Multi-select', 'Radio', 'Text', 'Boolean'];
-  //optionSelected: any;
-
-
-  constructor(private modalService: NgbModal, private dialog: MatDialog) {
-
+  form_creator: String
+  constructor(public snackBar: MatSnackBar, private dialog: MatDialog, private router: Router, private formCreatorService: FormCreatorService, public localStorage: LocalStorageService, private fromService: FormService) {
   }
-
 
   ngOnInit() {
     // Get all the surveys from backend
+    let form_creator = this.localStorage.get('form_creator');
+    this.form_creator = form_creator._id;
+    this.getAllForms(this.form_creator)
+  }
 
-
-    this.forms.push({
-      id: '1',
-      name: 'Survey 1'
-    });
-    this.forms.push({
-      id: '2',
-      name: 'Survey 2'
-    });
-    this.forms.push({
-      id: '3',
-      name: 'Survey 3'
+  openFormAddedSnackBar(form) {
+    this.snackBar.open(form + " added successfully",null, {
+      duration: 2000,
     });
   }
 
+  openFormDeletedSnackBar() {
+    this.snackBar.open("form  deleted successfully",null, {
+      duration: 2000,
+    });
+  }
+
+  openStatusSnackBar(form, status) {
+    let msg : String;
+    if( status == true){
+      msg = "activated"
+    }
+    else{
+      msg = "deactivated"
+    }
+
+    this.snackBar.open(form +" is successfully " + msg ,null, {
+      duration: 2000,
+    });
+  }
+
+  
+  
   openCreateDialog() {
 
     const dialogConfig = new MatDialogConfig();
@@ -69,10 +71,18 @@ export class MainPageComponent implements OnInit {
       data => {
         console.log("Dialog output:", data);
         // copy content form data.copyFormId to new
-        this.forms.push({
-          id: data.copy + 100,
-          name: data.title
-        });
+        let formTitle = {
+          "name": data.title,
+          "form_creator": this.form_creator
+        }
+
+        this.openFormAddedSnackBar(formTitle.name);
+        this.fromService.addForm(formTitle).subscribe(
+          data => {
+            console.log(data, "form creation")
+            this.getAllForms(this.form_creator)
+          }
+        )
       });
   }
 
@@ -91,105 +101,70 @@ export class MainPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       data => {
         console.log("Dialog output:", data);
-        this.forms.push({
-          id: data.copyFormId,
-          name: data.title
-        });
+        this.fromService.getForm(data.copyFormId).subscribe( 
+          copied_form => {
+            let newForm = {
+              name: data.title,
+              form_creator: copied_form.form.form_creator,
+              questions: copied_form.form.questions
+            }
+            this.fromService.addForm(newForm).subscribe(
+              data => {
+                console.log(data, "form created")
+                this.getAllForms(this.form_creator)
+              }
+            )
+          })
+        // this.forms.push({
+        //   id: data.copyFormId,
+        //   name: data.title
+        // });
       });
 
-
-  }
-  // public accordianButtonClick($event) {
-  //   let button = $event.target;
-  //   /* Toggle between adding and removing the "active" class,
-  //   to highlight the button that controls the panel */
-  //   button.classList.toggle("active");
-
-  //   /* Toggle between hiding and showing the active panel */
-  //   var panel = button.nextElementSibling;
-  //   if (panel.style.maxHeight){
-  //     panel.style.maxHeight = null;
-  //   } else {
-  //     panel.style.maxHeight = panel.scrollHeight + "px";
-  //   } 
-  // }
-
-  // public openFormTitleTextBox() {
-  //   this.buttonTextToggleClass = "show";
-  //   this.buttonButtonToggleClass = "hide";
-  // }
-
-  // public beforeChange($event: NgbTabChangeEvent) {
-  //   if ($event.nextId === 'tab-preventchange2') {
-  //     if (this.disableCreatePage) {
-  //       $event.preventDefault();
-  //     } else {
-  //       return true;
-  //     }
-  //   }
-  // };
-
-  // public addQuestion(){
-  //   this.questions_len = this.questions.length + 1
-  //   this.questions.push({
-  //     id: this.questions_len,
-  //     name: null,
-  //     type: null,
-  //     answer: []
-  //   });
-  //   this.editQuestion.push(false);
-  //   this.editQuestion.push(false);
-  // }
-
-  // public editQuestionDetails(index,q){
-  //   this.questions[index].name = q;
-  //   this.editQuestion[index] = false;
-  // }
-
-  // public editQuestionTypeDetails(index,t){
-  //   this.questions[index].type = t;
-  //   this.editQuestionType[index] = false;
-  //   if(t == 'Boolean'){
-  //     this.questions[index].answer.push('True');
-  //     this.questions[index].answer.push('False');
-  //   }
-
-  // }
-
-  // public addMultiSelectOption(index,option){
-  //   this.questions[index].answer.push(option);
-  //   this.multiselect = null
-  // }
-
-  // public setTitleFunction(x){
-  //   this.title = x;
-  //   this.editTitle = false;
-  // }
-
-  // public titleEdit(){
-  //   this.editTitle = true;
-  // }
-
-  // public enableCreatePage() {
-  //   console.log("check");
-  //   this.disableCreatePage = false;
-  // }
-  open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+  getAllForms(id) {
+    this.formCreatorService.getCreator(id).subscribe(
+      data => {
+        console.log(data, "forms_creator");
+        this.forms = data.creator.forms;
+        console.log(this.forms)
+        this.localStorage.set('forms', this.forms)
+      }
+    )
   }
 
+  deleteForm(id) {
+    this.fromService.deleteForm(id).subscribe(
+      data => {
+        this.getAllForms(this.form_creator);
+        this.openFormDeletedSnackBar();
+      }
+    )
+  }
+
+  formState(form) {
+    // console.log(form.active_status, e)
+    // form.active_status = e.checked;
+    form.active_status = !form.active_status
+    console.log(form.active_status)
+    this.fromService.updateForm(form._id, form).subscribe(
+      data => {
+        console.log(data, "update form");
+        this.formCreatorService.getCreator(this.form_creator).subscribe(
+          data => {
+            console.log(data, "forms_creator");
+            let forms = data.creator.forms;
+            console.log(forms)
+            this.localStorage.set('forms', forms)
+          })
+        this.openStatusSnackBar(form.name, form.active_status);
+      })
+  }
+
+  signout(){
+    this.localStorage.remove('form_creator')
+    this.localStorage.remove('forms')
+    this.router.navigate(['']);
+  }
 }

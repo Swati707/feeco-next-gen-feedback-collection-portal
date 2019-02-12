@@ -4,6 +4,11 @@ const { Form, validateForm } = require('../models/form')
 module.exports = {
     signup: async (req, res) => {
         let params = req.body
+        let creator = await FormCreator.findOne({username: req.body.username})
+        if(creator){
+            console.log("Username already exist")
+            return res.status(301).json({success: false, error: "Username already exist!"})
+        }
         let newCreator = FormCreator({
             username: params.username,
             password: params.password,
@@ -13,7 +18,7 @@ module.exports = {
             phone: params.phone,
             dob: params.dob
         })
-        let creator = await newCreator.save()
+        creator = await newCreator.save()
         console.log(creator)
         res.status(200).json({success: true, creator: creator})
     },

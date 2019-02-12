@@ -8,7 +8,7 @@
 
   <div>
     <mat-radio-group matInput required class="example-radio-group" formControlName="copyFormId">
-      <mat-radio-button class="example-radio-button" *ngFor="let form of forms" [value]="form.id">
+      <mat-radio-button class="example-radio-button" *ngFor="let form of forms" [value]="form._id">
         {{form.name}}
       </mat-radio-button>
     </mat-radio-group>

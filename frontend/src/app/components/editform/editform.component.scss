@@ -17,6 +17,7 @@
 .mat-button, .mat-raised-button{
     background-color: whitesmoke;
 } 
+
 .toolButton.addQuestion {
   border-radius: 4px;
   background-color: #f4511e;
@@ -166,13 +167,12 @@
 
 .footer {
 
-  margin-top: 65px;
   width: 100%;
   height: 50px;
   z-index: 3000;
   bottom: 0;
   left: 0;
-  position: fixed;
+  position: static;
   clear: both;
 }
 

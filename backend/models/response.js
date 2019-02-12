@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const mongoose = require('mongoose')
+const questionSchema = require('./question')
 
 const Response = mongoose.model('Response', new mongoose.Schema({
     form_id: {
@@ -17,13 +18,12 @@ const Response = mongoose.model('Response', new mongoose.Schema({
         default: Date.now
     },
     answers: [{
-        question_number: {
-            type: Number,
-            required: true
+        question_id: {
+            type: questionSchema
         },
         answer: {
             type: String,
-            required: true
+            required: false
         }
     }]
 }));

@@ -1,29 +1,51 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Questions } from '../../models/questions';
+import { Question } from '../../models/question';
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormService } from '../../services/form.service';
+import { FormCreatorService } from '../../services/form-creator.service';
+import { LocalStorageService } from 'angular-web-storage';
+import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: 'editform',
   templateUrl: './editform.component.html',
-  styleUrls: ['./editform.component.scss']
+  styleUrls: ['./editform.component.scss'],
+
 })
 export class EditformComponent implements OnInit {
 
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-  thirdFormGroup: FormGroup;
   questionTypes: Array<{
     name: String,
     value: String
   }> = []
 
-  questions:Array<Questions> = []
+  questions: Array<any> = []
 
-  options=[];
+  options = [];
   option;
   qType;
-  sliderValue=0;
-  constructor(private fb: FormBuilder) { 
+  form_id;
+  form_name;
+  form
+  creator_id
+  sliderValue = 0;
+  constructor(public snackBar: MatSnackBar, private formCreatorService: FormCreatorService, public localStorage: LocalStorageService, private fromService: FormService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
+    this.route.params.subscribe(params => {
+      this.form_id = params['_id']
+    })
+    this.fromService.getForm(this.form_id).subscribe(
+      data => {
+        this.form = data.form
+        this.creator_id = data.form.form_creator._id
+        this.form_name = data.form.name
+        console.log(data, "questions");
+        this.questions = data.form.questions;
+        console.log(this.questions, "questions 2")
+      }
+    )
+
+    console.log(this.form_id, "id of creator")
     this.questionTypes.push({
       name: 'Text',
       value: 'T'
@@ -47,29 +69,59 @@ export class EditformComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.firstFormGroup = this.fb.group({
-    //   firstCtrl: ['', Validators.required]
-    // });
-    // this.secondFormGroup = this.fb.group({
-    //   secondCtrl: this.qType
-    // });
-    // this.thirdFormGroup = this.fb.group({
-    //   thirdCtrl: this.options
-    // });
   }
 
-  addOption(){
-      this.options.push(this.option)
+  openQuestionAddedSnackBar(question) {
+    this.snackBar.open(question + " is added to current form",null, {
+      duration: 2000,
+    });
+  }
+
+  openFormSavedSnackBar(form) {
+    this.snackBar.open(form + " is updated and saved to server",null, {
+      duration: 2000,
+    });
+  }
+
+  addOption(possible_answers) {
+    if (this.option) {
+      console.log("possible_answers", possible_answers)
+      possible_answers.push(this.option)
       this.option = null;
+    }
   }
 
-  addQuestion(){
+  addQuestion() {
+
     this.questions.push({
-      id: null,
-      name: null,
-      type: null,
-      options:null
+      question: null,
+      question_type: null,
+      possible_answers: [],
+      question_number: this.questions.length + 1,
+      done: false
     }
-  )
+    )
+  }
+
+  saveForm() {
+    this.form.questions = this.questions
+    this.localStorage.set('forms', JSON.stringify(this.form))
+    this.fromService.updateForm(this.form_id, this.form).subscribe(
+      data => {
+        console.log(data, "update form");
+        this.formCreatorService.getCreator(this.creator_id).subscribe(
+          data => {
+            console.log(data, "forms_creator");
+            let forms = data.creator.forms;
+            console.log(forms)
+            this.localStorage.set('forms', forms)
+          })
+          this.openFormSavedSnackBar(this.form.name)
+
+      })
+  }
+
+  done(q) {
+    this.openQuestionAddedSnackBar(q.question)
   }
 }

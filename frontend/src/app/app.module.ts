@@ -12,9 +12,15 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { CreateFormComponent } from './components/create-form/create-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatNativeDateModule, MatTableModule, MatGridListModule,MatSliderModule, MatStepperModule, MatExpansionModule, MatTabsModule, MatDatepickerModule, MatIconModule, MatButtonModule, MatCheckboxModule, MatToolbarModule, MatCardModule, MatFormFieldModule, MatInputModule, MatRadioModule, MatListModule, MatSelectModule, MatProgressSpinnerModule, } from '@angular/material';
+import { MatNativeDateModule, MatSnackBarModule, MatSlideToggleModule, MatTableModule, MatGridListModule, MatSliderModule, MatStepperModule, MatExpansionModule, MatTabsModule, MatDatepickerModule, MatIconModule, MatButtonModule, MatCheckboxModule, MatToolbarModule, MatCardModule, MatFormFieldModule, MatInputModule, MatRadioModule, MatListModule, MatSelectModule, MatProgressSpinnerModule, } from '@angular/material';
 import { CopyFormComponent } from './components/copy-form/copy-form.component';
 import { SigninComponent } from './components/signin/signin.component';
+import { FormCreatorService } from "./services/form-creator.service"
+import { FormService } from "./services/form.service"
+import { HttpClientModule } from '@angular/common/http';
+import { AngularWebStorageModule } from 'angular-web-storage';
+import { ResponseComponent } from './components/response/response.component';
+import { ResponseViewComponent } from './components/response-view/response-view.component';
 
 @NgModule({
   declarations: [
@@ -25,30 +31,36 @@ import { SigninComponent } from './components/signin/signin.component';
     EditformComponent,
     CreateFormComponent,
     CopyFormComponent,
-    SigninComponent
+    SigninComponent,
+    ResponseComponent,
+    ResponseViewComponent,
   ],
   imports: [
     NgbModule,
+    AngularWebStorageModule,
+    MatSlideToggleModule,
     BrowserModule,
+    HttpClientModule,
     FormsModule,
     MatDialogModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     BrowserAnimationsModule,
     MatInputModule, MatTableModule,
-    MatButtonModule,MatGridListModule,
-    MatRadioModule, MatSelectModule, MatListModule,
-    MatCardModule, MatExpansionModule, MatStepperModule, MatSliderModule,
-    MatProgressSpinnerModule, MatTabsModule, MatNativeDateModule, MatDatepickerModule, MatIconModule,
+    MatButtonModule, MatGridListModule,
+    MatRadioModule, MatSelectModule, MatListModule, MatSnackBarModule,
+    MatCardModule, MatExpansionModule, MatCheckboxModule, MatStepperModule, MatSliderModule,
+    MatProgressSpinnerModule, MatCheckboxModule, MatTabsModule, MatNativeDateModule, MatDatepickerModule, MatIconModule,
     MatCheckboxModule, MatToolbarModule,
     RouterModule.forRoot([
       { path: '', component: SigninComponent },
       { path: 'creator', component: MainPageComponent },
-      { path: 'form/:id', component: EditformComponent },
-      // {path: '**', component: NotFoundComponent },
+      { path: 'form/:_id', component: EditformComponent },
+      { path: 'response/:_id', component: ResponseComponent },
+      { path: 'response_view/:_id', component: ResponseViewComponent}
     ])
   ],
-  providers: [],
+  providers: [FormCreatorService, FormService],
   bootstrap: [AppComponent],
   entryComponents: [CreateFormComponent, CopyFormComponent]
 })

@@ -2,6 +2,17 @@
 @import '~bootstrap/scss/bootstrap-reboot';
 @import '~bootstrap/scss/bootstrap-grid';
 @import '~bootstrap/scss/bootstrap.scss';
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import '~font-awesome/css/font-awesome.css';
+@import '~@angular/material/theming';
 
+// Include non-theme styles for core.
+@include mat-core();
+
+// Define a theme.
+$primary: mat-palette($mat-cyan);
+$accent:  mat-palette($mat-deep-purple, A200, A100);
+$warn: mat-palette($mat-red, A200, A700);
+$theme: mat-light-theme($primary, $accent, $warn);
+
+// Include all theme styles for the components.
+@include angular-material-theme($theme);
