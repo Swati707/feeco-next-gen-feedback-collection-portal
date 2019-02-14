@@ -17,6 +17,10 @@ const FormReceiver = mongoose.model('FormReceiver', new mongoose.Schema({
     form: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Form'
+    },
+    responses : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Response'
     }
 
 }));
