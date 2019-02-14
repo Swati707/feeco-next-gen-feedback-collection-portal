@@ -10,7 +10,10 @@
 
   <div style="width: 90%;" class="center">
     <mat-card class="example-card">
-      <mat-card-subtitle>Form link sent to: {{respondents_sent ? respondents_sent : 'None'}}</mat-card-subtitle>
+      <mat-card-title>Form link has been sent to {{respondents_sent ? 'the below emails': 'None'}}</mat-card-title>
+      <div *ngFor="let r of respondents_sent">
+        <mat-card-subtitle> {{r.email}}</mat-card-subtitle>
+      </div>
       <mat-card-content>
         <mat-card-title>Send form link</mat-card-title>
         <mat-form-field style="width: 80%">

@@ -3,7 +3,7 @@
 <mat-dialog-content [formGroup]="otpform">
 
   <mat-form-field style="width:450px !important">
-    <input matInput placeholder="Enter the OTP to submit the feedback" formControlName="otp">
+    <input matInput placeholder="Enter the OTP to submit the feedback" [(ngModel)]="otp_value" formControlName="otp">
   </mat-form-field>
 </mat-dialog-content>
 

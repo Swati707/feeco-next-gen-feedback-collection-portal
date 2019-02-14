@@ -4,7 +4,7 @@
     <span class="spacer"></span>
   </mat-toolbar-row>
 </mat-toolbar>
-
+<div *ngIf="otp_valid">
 <div *ngFor="let q of questions" class="center">
   <div *ngIf="q.question_type == 'Text'">
     <mat-card style="text-align: left">
@@ -54,8 +54,9 @@
     </mat-card>
   </div>
 </div>
-
 <div class="center" style="text-align: -webkit-center">
   <button class="toolButton" style="width: 150px;
     height: 40px; " (click)="submitForm()"> <span>Submit Response</span></button>
 </div>
+</div>
+

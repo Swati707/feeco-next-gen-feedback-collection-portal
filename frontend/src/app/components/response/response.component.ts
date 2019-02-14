@@ -15,6 +15,7 @@ import { VerifyOtpComponent } from '../../components/verify-otp/verify-otp.compo
 export class ResponseComponent implements OnInit {
 
   form_id
+  otp_valid = false
   form
   form_name
   questions
@@ -130,11 +131,7 @@ export class ResponseComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       data => {
         console.log("Dialog output:", data);
-        // this.forms.push({
-        //   id: data.copyFormId,
-        //   name: data.title
-        // });
+        this.otp_valid = true
       });
-
   }
 }

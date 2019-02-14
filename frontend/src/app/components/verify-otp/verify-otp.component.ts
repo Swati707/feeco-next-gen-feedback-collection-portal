@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
+import { FormRecieverService } from '../../services/form-reciever.service';
 
 @Component({
   selector: 'verify-otp',
@@ -11,8 +12,9 @@ export class VerifyOtpComponent implements OnInit {
 
   otpform: FormGroup;
   otp: string;
+  otp_value:string;
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: FormBuilder, private formRecieverService:FormRecieverService,
     private dialogRef: MatDialogRef<VerifyOtpComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -23,6 +25,16 @@ export class VerifyOtpComponent implements OnInit {
   }
 
   submit(){
-    this.dialogRef.close(this.otpform.value);
+    let body = {
+      otp: this.otp_value
+    }
+    console.log(body)
+    this.formRecieverService.getReceiverFromOTP(body).subscribe(
+      data => {
+        console.log("Dialog output:", data);
+        if(data.success){
+          this.dialogRef.close(true);
+        }
+      });
   }
 }
