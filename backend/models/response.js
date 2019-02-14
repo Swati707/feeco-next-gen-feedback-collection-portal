@@ -10,7 +10,7 @@ const Response = mongoose.model('Response', new mongoose.Schema({
     },
     respondent: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Respondent',
+        ref: 'FormReceiver',
         required: true
     },
     submit_time: {
