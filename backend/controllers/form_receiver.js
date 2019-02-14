@@ -16,14 +16,17 @@ module.exports = {
 
             var email_ids = req.body.emailids.split(";")
             email_ids.forEach(async email => {
-                let otp = crypto.createHash('md5').update(email).digest("hex");
-                let newFormReceiver = new FormReceiver({
-                    email: email,
-                    otp: otp,
-                    form: form
-                })
-                let formReceiver = await newFormReceiver.save()
-                console.log(formReceiver)
+                let resp = await FormReceiver.findOne({form: form_id, email: email})
+                if(!resp){
+                    let otp = crypto.createHash('md5').update(email).digest("hex");
+                    let newFormReceiver = new FormReceiver({
+                        email: email,
+                        otp: otp,
+                        form: form
+                    })
+                    let formReceiver = await newFormReceiver.save()
+                    console.log(formReceiver)
+                }
             });
         })
         res.status(200).json({success: true})

@@ -1,56 +1,45 @@
 const { Response, validateResponse } = require('../models/response')
 const { Respondent, validateRespondent } = require('../models/respondent')
+const { FormReceiver, validateFormReceiver } = require('../models/form_receiver')
 const { Form } = require('../models/form')
 
 module.exports = {
     addResponse: async (req, res) => {
         let form = await Form.findById(req.body.form_id)
-        if(!form){
+        if(!form || !form.active_status){
             console.log("Form not found!")
             return res.status(404).json({success: false, error: "Form not found!"})
         }
         let respondentEmail = req.body.email
         var createdResponse
-        let resp = await Respondent.findOne({email: respondentEmail})
+        let resp = await FormReceiver.findOne({email: respondentEmail, form: req.body.form_id})
         if(resp){
-            let response = await Response.findOne({form_id: req.body.form_id, respondent: resp})
-            if(response){
+            if(resp.submitted){
                 return res.status(302).json({success: false, error: "Entry already taken!"})
             }
+            
             let newResponse = new Response({
                 form_id: req.body.form_id,
                 respondent: resp,
                 answers: req.body.answers
             })
             response = await newResponse.save()
-            await resp.responses.push(response.toObject())
+            resp.submitted = true
+            resp.responses = await Response.findById(response._id)
             await resp.save()
             createdResponse = response
+            createdResponse =  createdResponse.populate('form_id question_id', (err, createdResponse) => {
+                if(err){
+                    console.log("Error while populating form_id");
+                    return res.json({error: err});
+                }
+                console.log("response", createdResponse)
+                res.status(200).json({sucess: true, response: createdResponse})
+            })
         } else {
-            let newRespondent = new Respondent({
-                email: respondentEmail,
-                responses: []
-            })
-            let newResponse = new Response({
-                form_id: req.body.form_id,
-                respondent: newRespondent,
-                answers: req.body.answers
-            })
-            let response = await newResponse.save()
-
-            await newRespondent.responses.push(response.toObject())
-            await newRespondent.save()
-            console.log("respondent", newRespondent)
-            createdResponse = response
+            console.log("Respondent not found!")
+            return res.status(404).json({success: false, error: "Respondent not found!"})
         }
-        createdResponse =  createdResponse.populate('form_id question_id', (err, createdResponse) => {
-            if(err){
-                console.log("Error while populating form_id");
-                return res.json({error: err});
-            }
-            console.log("response", createdResponse)
-            res.status(200).json({sucess: true, response: createdResponse})
-        })
     },
 
     getResponse: async (req, res) => {
