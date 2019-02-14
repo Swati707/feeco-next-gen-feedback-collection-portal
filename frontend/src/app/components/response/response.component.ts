@@ -17,6 +17,7 @@ export class ResponseComponent implements OnInit {
   form_id
   otp_valid = false
   form
+  respondent
   form_name
   questions
   answer: {
@@ -89,7 +90,7 @@ export class ResponseComponent implements OnInit {
     console.log(submit_answers)
     let response = {
       form_id: this.form_id,
-      email: "anonymo",
+      email: this.respondent,
       answers: submit_answers
     }
     let result = this.responseService.addResponse(response).subscribe(
@@ -132,6 +133,8 @@ export class ResponseComponent implements OnInit {
       data => {
         console.log("Dialog output:", data);
         this.otp_valid = true
+        this.respondent = data.form_receiver.email
+        console.log('email respondent,', this.respondent)
       });
   }
 }

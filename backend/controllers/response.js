@@ -6,7 +6,7 @@ const { Form } = require('../models/form')
 module.exports = {
     addResponse: async (req, res) => {
         let form = await Form.findById(req.body.form_id)
-        if(!form || !form.active_status){
+        if(!form){
             console.log("Form not found!")
             return res.status(404).json({success: false, error: "Form not found!"})
         }

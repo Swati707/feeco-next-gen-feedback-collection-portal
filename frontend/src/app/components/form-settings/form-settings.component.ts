@@ -46,5 +46,4 @@ export class FormSettingsComponent implements OnInit {
         this.respondents_sent = data.form_receivers
       });
   }
-
 }

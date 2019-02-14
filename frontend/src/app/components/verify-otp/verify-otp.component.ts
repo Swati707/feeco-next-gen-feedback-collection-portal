@@ -33,7 +33,7 @@ export class VerifyOtpComponent implements OnInit {
       data => {
         console.log("Dialog output:", data);
         if(data.success){
-          this.dialogRef.close(true);
+          this.dialogRef.close(data);
         }
       });
   }
