@@ -31,7 +31,7 @@ export class ResponseViewComponent implements OnInit {
         console.log(data);
         for(let i of data.responses){
           console.log(i)
-          this.responses.push(i.answers)
+          this.responses.push(i)
         }
         console.log(this.responses)
     })

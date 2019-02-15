@@ -7,12 +7,16 @@
       <button class="toolButton signout" (click)="signout()"> <span>Signout</span></button> -->
     </mat-toolbar-row>
   </mat-toolbar>
-  <div *ngFor="let r of responses">
+  <mat-list *ngFor="let r of responses">
+    <mat-list-item>{{r.respondent}} <span style="flex: 1 1 auto;"></span> submitted at {{r.submit_time}}</mat-list-item>
+    <mat-divider></mat-divider>
+  </mat-list>
+  <!-- <div>
     <div *ngFor="let ra of r">
       {{ra.question_id}}
       {{ra.answer}}
     </div>
-  </div>
+  </div> -->
 </div>
 <mat-toolbar color="primary" class="footer">
   <mat-toolbar-row>
