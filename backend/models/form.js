@@ -19,8 +19,6 @@ const Form = mongoose.model('Form', new mongoose.Schema({
     form_creator: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'FormCreator'
-        // required: true,
-        // type: String
     },
     creation_time: {
         type: Date,
@@ -33,7 +31,8 @@ const Form = mongoose.model('Form', new mongoose.Schema({
     html_body: {
         type: String,
         required: true
-    }
+    },
+    anonymous: Boolean
 
 }));
 
