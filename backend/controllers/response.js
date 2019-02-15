@@ -58,13 +58,27 @@ module.exports = {
 
     getResponsesOfOneForm: async (req, res) => {
         const {form_id} = req.params
-        let responses = await Response.find({form_id: form_id})
-        if(responses.length == 0){
+        let form = Form.findById(form_id)
+        var resp
+        if(!form){
+            console.log("Form not found")
+        }
+        if(form.anonymous){
+            resp = await Response.find({form_id: form_id})
+        } else {
+            resp = await Response.find({form_id: form_id}).populate('respondent', (err, responses) => {
+                if(err){
+                    console.log("Error while populating respondent and forms");
+                    return res.status(404).json({success: false, error: err});
+                } 
+            })
+        }
+
+        if(resp.length == 0){
             console.log("No responses found!")
             return res.status(404).json({success: false, error: "No responses found"})
         }
-        console.log("responses", responses)
-        return res.status(200).json({success: true, responses: responses})
+        return res.status(200).json({success: true, responses: resp})
     },
 
     updateResponse: async (req, res) => {    

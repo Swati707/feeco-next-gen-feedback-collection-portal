@@ -1,6 +1,5 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
-const {Form} = require('./form');
 
 const FormReceiver = mongoose.model('FormReceiver', new mongoose.Schema({
     email : {
@@ -23,7 +22,7 @@ const FormReceiver = mongoose.model('FormReceiver', new mongoose.Schema({
         ref: 'Response'
     }
 
-}));
+}), 'FormReceiver');
 
 function validateFormReceiver(FormReceiver) {
     const formReceiverSchema = {}
