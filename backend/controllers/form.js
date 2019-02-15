@@ -11,7 +11,8 @@ module.exports = {
             name: req.body.name,
             form_creator: req.body.form_creator,
             questions: req.body.questions,
-            html_body: "Add some questions!"
+            html_body: "Add some questions!",
+            anonymous: req.body.anonymous
         });
 
         let form = await newForm.save();
