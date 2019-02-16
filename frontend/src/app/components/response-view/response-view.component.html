@@ -3,14 +3,35 @@
     <mat-toolbar-row>
       <h1><span href="#default">Saaransh - Next Gen Feedback Collection Portal</span></h1>
       <span class="spacer"></span>
-      <!-- <button class="toolButton home"> <span>Home</span></button>
-      <button class="toolButton signout" (click)="signout()"> <span>Signout</span></button> -->
+      <button class="toolButton home" (click)="home()"> <span>Home</span></button>
+      <button class="toolButton signout" (click)="signout()"> <span>Signout</span></button>
     </mat-toolbar-row>
   </mat-toolbar>
-  <mat-list *ngFor="let r of responses">
-    <mat-list-item>{{r.respondent}} <span style="flex: 1 1 auto;"></span> submitted at {{r.submit_time}}</mat-list-item>
-    <mat-divider></mat-divider>
-  </mat-list>
+  <div *ngIf="anonymous" class="center">
+      <mat-toolbar-row style="background-color: yellow">
+        <span style="color: red">This form collect reponses anonymously </span>
+      </mat-toolbar-row>
+    </div>
+    <div *ngIf="!anonymous" class="center">
+      <mat-toolbar-row style="background-color: yellow">
+        <span style="color: red">This form collect reponses unanonymously </span>
+      </mat-toolbar-row>
+    </div>
+  <div *ngIf="!anonymous">
+    <mat-list *ngFor="let r of responses">
+      <mat-list-item (click)="response_id(r._id)">{{r.respondent.email}} <span style="flex: 1 1 auto;"></span>
+        submitted at {{r.submit_time}}</mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </div>
+  <div *ngIf="anonymous">
+    <mat-list *ngFor="let r of responses; index as i">
+      <mat-list-item (click)="response_id(r._id)"> Respondent {{i + 1}} <span style="flex: 1 1 auto;"></span> submitted
+        at {{r.submit_time}}</mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </div>
+
   <!-- <div>
     <div *ngFor="let ra of r">
       {{ra.question_id}}

@@ -14,6 +14,7 @@ export class CopyFormComponent implements OnInit {
   title: string;
   forms: Array<Form> = [];
   copyFormId: string;
+  anonymous = false;
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<CopyFormComponent>,
@@ -26,7 +27,8 @@ export class CopyFormComponent implements OnInit {
   ngOnInit() {
     this.copyform = this.fb.group({
       title: [this.title ],
-      copyFormId: [this.copyFormId]
+      copyFormId: [this.copyFormId],
+      anonymous:[this.anonymous]
   });
 
   }
@@ -36,7 +38,7 @@ export class CopyFormComponent implements OnInit {
   }
 
   close() {
-    this.dialogRef.close();
+    this.dialogRef.close(null);
   }
 
 }

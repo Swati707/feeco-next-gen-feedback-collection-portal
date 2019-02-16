@@ -73,7 +73,8 @@ export class MainPageComponent implements OnInit {
         // copy content form data.copyFormId to new
         let formTitle = {
           "name": data.title,
-          "form_creator": this.form_creator
+          "form_creator": this.form_creator,
+          "anonymous": data.anonymous
         }
 
         this.openFormAddedSnackBar(formTitle.name);
@@ -106,7 +107,8 @@ export class MainPageComponent implements OnInit {
             let newForm = {
               name: data.title,
               form_creator: copied_form.form.form_creator,
-              questions: copied_form.form.questions
+              questions: copied_form.form.questions,
+              anonymous: data.anonymous
             }
             this.fromService.addForm(newForm).subscribe(
               data => {
@@ -166,5 +168,13 @@ export class MainPageComponent implements OnInit {
     this.localStorage.remove('form_creator')
     this.localStorage.remove('forms')
     this.router.navigate(['']);
+  }
+
+  open_responses(form_id){
+    this.router.navigate(['/response_view/' +  form_id]);
+  }
+
+  home(){
+    this.router.navigate(['/creator']);
   }
 }

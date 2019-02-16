@@ -5,7 +5,9 @@
   <mat-form-field style="width:450px !important">
     <input matInput placeholder="Title" formControlName="title">
   </mat-form-field>
-
+  <div>
+    <mat-checkbox [(ngModel)]="anonymous" formControlName="anonymous">Collect data Anoymously</mat-checkbox>
+  </div>
   <div>
     <mat-radio-group matInput required class="example-radio-group" formControlName="copyFormId">
       <mat-radio-button class="example-radio-button" *ngFor="let form of forms" [value]="form._id">

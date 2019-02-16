@@ -1,0 +1,35 @@
+<div class="mainPage" style="overflow-x: hidden;">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <h1><span href="#default">Saaransh - Next Gen Feedback Collection Portal</span></h1>
+      <span class="spacer"></span>
+      <button class="toolButton home" (click)="home()"> <span>Home</span></button>
+      <button class="toolButton signout" (click)="signout()"> <span>Signout</span></button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div *ngIf="anonymous" class="center">
+    <mat-toolbar-row style="background-color: yellow">
+      <span style="color: red">This form collect reponses anonymously </span>
+    </mat-toolbar-row>
+  </div>
+  <div *ngIf="!anonymous" class="center">
+    <mat-toolbar-row style="background-color: yellow">
+      <span style="color: red">This form collect reponses unanonymously </span>
+    </mat-toolbar-row>
+    <mat-toolbar-row>
+      <span class="center">Respondent : {{r_email}}</span>
+    </mat-toolbar-row>
+  </div>
+  <div style="width: 90%;" *ngFor="let c of question_answers" class="center">
+    <mat-card>
+      <mat-card-subtitle>Question: {{c.q}}</mat-card-subtitle>
+      <mat-card-subtitle>Answer: {{c.a}}</mat-card-subtitle>
+    </mat-card>
+  </div>
+</div>
+<mat-toolbar color="primary" class="footer">
+  <mat-toolbar-row>
+    <span class="example-spacer"></span>
+    <span>Handicrafted with <span style="color: red">&hearts;</span> by Swati Kanchan</span>
+  </mat-toolbar-row>
+</mat-toolbar>

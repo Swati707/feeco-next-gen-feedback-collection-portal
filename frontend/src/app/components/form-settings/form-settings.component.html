@@ -3,26 +3,43 @@
     <mat-toolbar-row>
       <h1><span href="#default">Saaransh - Next Gen Feedback Collection Portal</span></h1>
       <span class="spacer"></span>
-      <button class="toolButton home"> <span>Home</span></button>
-      <button class="toolButton signout"> <span>Signout</span></button>
+      <button class="toolButton home" (click)="home()"> <span>Home</span></button>
+      <button class="toolButton signout" (click)="signout()"> <span>Signout</span></button>
     </mat-toolbar-row>
   </mat-toolbar>
-
-  <div style="width: 90%;" class="center">
+  <div *ngIf="anonymous" class="center">
+    <mat-toolbar-row style="background-color: yellow">
+      <span style="color: red">This form collect reponses anonymously </span>
+    </mat-toolbar-row>
+  </div>
+  <div *ngIf="!anonymous" class="center">
+    <mat-toolbar-row style="background-color: yellow">
+      <span style="color: red">This form collect reponses unanonymously </span>
+    </mat-toolbar-row>
+  </div>
+  <div style="width: 90%;" class="center" *ngIf="form">
     <mat-card class="example-card">
+      <label class="switch">
+        <input type="checkbox" [(ngModel)]="form.active_status" [checked]="form.active_status" (click)="formState()">
+        <span class="slider round"></span>
+      </label>
+
+      <mat-divider></mat-divider>
+      <div style="padding-top: 10px">
+        <mat-card-subtitle> Link of the form is <mark>http://localhost:4200/response/{{form_id}}</mark></mat-card-subtitle>
+      </div>
+      <mat-divider></mat-divider>
       <mat-card-title>Form link has been sent to {{respondents_sent ? 'the below emails': 'None'}}</mat-card-title>
       <div *ngFor="let r of respondents_sent">
         <mat-card-subtitle> {{r.email}}</mat-card-subtitle>
       </div>
+      <mat-divider></mat-divider>
       <mat-card-content>
         <mat-card-title>Send form link</mat-card-title>
         <mat-form-field style="width: 80%">
           <input matInput placeholder="Enter the email addresses seperated by semi-colon ';'" [(ngModel)]="respondents">
         </mat-form-field>
       </mat-card-content>
-      <div>
-        <mat-checkbox class="example-margin" [(ngModel)]="anonymous">Collect data Anoymously</mat-checkbox>
-      </div>
       <div>
         <button mat-raised-button color="blue" (click)="send_form()">Send</button>
       </div>

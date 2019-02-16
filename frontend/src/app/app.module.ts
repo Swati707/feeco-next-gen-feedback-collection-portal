@@ -23,7 +23,8 @@ import { ResponseComponent } from './components/response/response.component';
 import { ResponseViewComponent } from './components/response-view/response-view.component';
 import { FormSettingsComponent } from './components/form-settings/form-settings.component';
 import { VerifyOtpComponent } from './components/verify-otp/verify-otp.component';
-import { FormRecieverService } from "./services/form-reciever.service"
+import { FormRecieverService } from "./services/form-reciever.service";
+import { ResponseIdComponent } from './components/response-id/response-id.component'
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { FormRecieverService } from "./services/form-reciever.service"
     ResponseViewComponent,
     FormSettingsComponent,
     VerifyOtpComponent,
+    ResponseIdComponent,
   ],
   imports: [
     NgbModule,
@@ -63,7 +65,8 @@ import { FormRecieverService } from "./services/form-reciever.service"
       { path: 'form/:_id', component: EditformComponent },
       { path: 'response/:_id', component: ResponseComponent },
       { path: 'response_view/:_id', component: ResponseViewComponent },
-      { path: 'form_settings/:_id', component: FormSettingsComponent }
+      { path: 'form_settings/:_id', component: FormSettingsComponent },
+      { path: 'response_view/response/:_id', component: ResponseIdComponent },
     ])
   ],
   providers: [FormCreatorService, FormService, FormRecieverService],

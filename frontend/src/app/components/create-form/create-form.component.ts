@@ -11,6 +11,7 @@ export class CreateFormComponent implements OnInit {
 
   createform: FormGroup;
   title: string;
+  anonymous= false;
 
   constructor(
     private fb: FormBuilder,
@@ -23,7 +24,8 @@ export class CreateFormComponent implements OnInit {
 
   ngOnInit() {
     this.createform = this.fb.group({
-      title: [this.title ]
+      title: [this.title ],
+      anonymous: [this.anonymous]
   });
   }
 

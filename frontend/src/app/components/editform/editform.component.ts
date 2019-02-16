@@ -121,6 +121,17 @@ export class EditformComponent implements OnInit {
       })
   }
 
+  
+  signout(){
+    this.localStorage.remove('form_creator')
+    this.localStorage.remove('forms')
+    this.router.navigate(['']);
+  }
+
+  home(){
+    this.router.navigate(['/creator']);
+  }
+  
   done(q) {
     this.openQuestionAddedSnackBar(q.question)
   }

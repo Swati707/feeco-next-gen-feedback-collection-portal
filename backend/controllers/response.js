@@ -13,6 +13,7 @@ module.exports = {
         let respondentEmail = req.body.email
         var createdResponse
         let resp = await FormReceiver.findOne({email: respondentEmail, form: req.body.form_id})
+        console.log(resp,"repondent")
         if(resp){
             if(resp.submitted){
                 return res.status(302).json({success: false, error: "Entry already taken!"})

@@ -4,7 +4,7 @@
     <mat-toolbar-row>
       <h1><span href="#default">Saaransh - Next Gen Feedback Collection Portal</span></h1>
       <span class="spacer"></span>
-      <button class="toolButton home"> <span>Home</span></button>
+      <button class="toolButton home" (click)="home()"> <span>Home</span></button>
       <button class="toolButton signout" (click)="signout()"> <span>Signout</span></button>
     </mat-toolbar-row>
   </mat-toolbar>
@@ -22,7 +22,7 @@
       <mat-grid-tile>{{i+1}}</mat-grid-tile>
       <mat-grid-tile>{{form.name}}</mat-grid-tile>
       <mat-grid-tile>
-        <button class="toolButton feedback"> <span>Feedbacks</span></button>
+        <button class="toolButton feedback" (click)= "open_responses(form._id)"> <span>Feedbacks</span></button>
       </mat-grid-tile>
       <mat-grid-tile>
         <button class="toolButton edit" [routerLink]="['/form', form._id]"> <span>Edit</span></button>
