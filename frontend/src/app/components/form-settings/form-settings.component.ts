@@ -13,6 +13,7 @@ import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig  } from "@an
 })
 export class FormSettingsComponent implements OnInit {
 
+  domain_name = 'http://localhost:4200'
   form_id;
   respondents;
   respondents_sent;
@@ -38,13 +39,15 @@ export class FormSettingsComponent implements OnInit {
       form: this.form_id,
       emailids: this.respondents
     }
+    this.snackBar.open("Emails sent :)" ,null, {
+      duration: 2000,
+    });
     this.formRecieverService.addFormReciever(body).subscribe(
       data => {
         console.log(data);
         this.get_all_recievers()
         this.respondents = ''
       });
-
   }
 
   get_all_recievers() {
@@ -90,11 +93,11 @@ export class FormSettingsComponent implements OnInit {
             console.log(forms)
             this.localStorage.set('forms', forms)
           })
-        this.openStatusSnackBar(this.form.name, this.form.active_status);
+        this.formStateSnackBar(this.form.name, this.form.active_status);
       })
   }
 
-  openStatusSnackBar(form, status) {
+  formStateSnackBar(form, status) {
     let msg : String;
     if( status == true){
       msg = "activated"

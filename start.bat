@@ -1,13 +1,12 @@
 @echo off
 
-set mongoexe="C:\Mongo DB\bin\mongod.exe"
-set mongoDB="F:\Projects\MongodbData\"
+set mongoexe=c:\MongoDB\bin\mongod.exe
+set mongoDB="d:\mongodb database"
 
-REM start "C:\Mongo DB\bin\mongod.exe" --dbpath="f:\Projects\MongodbData"
+start %mongoexe% --dbpath %mongoDB%
 timeout 5
 start nodemon ".\index.js"
 
 timeout 2
 cd "frontend"
 ng serve
-

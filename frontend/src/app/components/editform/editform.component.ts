@@ -52,7 +52,7 @@ export class EditformComponent implements OnInit {
     })
     this.questionTypes.push({
       name: 'Multi Select',
-      value: 'M'
+      value: 'MS'
     })
     this.questionTypes.push({
       name: 'Single Select',
