@@ -1,6 +1,32 @@
 const { Form, validateForm } = require('../models/form')
 const { FormReceiver, validateFormReceiver } = require('../models/form_receiver')
 var crypto = require('crypto');
+var nodemailer = require('nodemailer')
+
+const domain_name = 'http://localhost:4200'
+function sendMails(mailid, subject, message){
+    var transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        auth: {
+          user: 'projectsaaransh@gmail.com',
+          pass: 'projectsaaransh@2'
+        }
+      });
+    var mailOptions = {
+        from: 'projectsaaransh@gmail.com',
+        to: mailid,
+        subject: subject,
+        html: message
+    }
+    console.log("mailOptions", mailOptions)
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent to ' + mailid + ': ' + info.response);
+        }
+    });
+}
 
 module.exports = {
     
@@ -13,23 +39,34 @@ module.exports = {
                 console.log("error", "The form input is not valid")
                 return res.status(404).send('The form input is not valid')
             }
-
-            var email_ids = req.body.emailids.split(";")
-            email_ids.forEach(async email => {
-                let resp = await FormReceiver.findOne({form: form_id, email: email})
-                if(!resp){
-                    let otp = crypto.createHash('md5').update(email).digest("hex");
-                    let newFormReceiver = new FormReceiver({
-                        email: email,
-                        otp: otp,
-                        form: form
-                    })
-                    let formReceiver = await newFormReceiver.save()
-                    console.log(formReceiver)
+            form.populate('form_creator', (err, form)=>{
+                if(err){
+                    console.log("Error while populating form_creator in addFormReceiver")
                 }
-            });
+                form_creator_name = form['form_creator']['name']
+                var email_ids = req.body.emailids.split(";")
+                email_ids.forEach(async email => {
+                    email = email.trim()
+                    let resp = await FormReceiver.findOne({form: form_id, email: email})
+                    if(!resp){
+                        let otp = crypto.createHash('md5').update(email).digest("hex");
+                        let newFormReceiver = new FormReceiver({
+                            email: email,
+                            otp: otp,
+                            form: form
+                        })
+                        let formReceiver = await newFormReceiver.save()
+                        let emailSub = "Feedback form by " + formReceiver['form']['form_creator']['name']
+                        let emailMessage = "<p>Hi, <br>Please fill this <a href='" + domain_name + "/response/" + form['id'] + "'>feedback form</a> by " + formReceiver['form']['form_creator']['name'] + 
+                                ".<br> Use this OTP while filling the form: <b>" + otp + "</b><br><br>Remember this OTP can only be used by you and only once!!!" +
+                                "<br><br><br>Thank you,<br>Team Project Saaransh</p>"
+                        await sendMails(email, emailSub, emailMessage)
+                        console.log(formReceiver)
+                    }
+                });
+            })
         })
-        res.status(200).json({success: true})
+        res.status(200).json({success: true, message: "Message sent to"+req.body.emailids.split(";")})
     },
 
     getReceiverFromOTP: async (req, res) => {

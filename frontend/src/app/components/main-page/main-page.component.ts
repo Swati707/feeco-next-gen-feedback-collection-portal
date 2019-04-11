@@ -18,7 +18,8 @@ import { Router } from '@angular/router'
 export class MainPageComponent implements OnInit {
 
   forms: Array<Form> = [];
-  form_creator: String
+  form_creator: String;
+  default_ques: Array<any> = [];
   constructor(public snackBar: MatSnackBar, private dialog: MatDialog, private router: Router, private formCreatorService: FormCreatorService, public localStorage: LocalStorageService, private fromService: FormService) {
   }
 
@@ -70,11 +71,42 @@ export class MainPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       data => {
         console.log("Dialog output:", data);
+        this.default_ques.push({
+          question: "Sample Text Question?",
+          question_type: "Text",
+          possible_answers: [],
+          question_number: 1
+        },
+        {
+          question: "Sample Multi Select Question?",
+          question_type: "Multi Select",
+          possible_answers: ["Option 1", "Option 2", "Option 3"],
+          question_number: 2
+        },
+        {
+          question: "Sample Single Select Question?",
+          question_type: "Single Select",
+          possible_answers: ["Option 1", "Option 2", "Option 3"],
+          question_number: 3
+        },
+        {
+          question: "Sample Number Rating Question?",
+          question_type: "Number Rating",
+          possible_answers: [],
+          question_number: 4
+        },
+        {
+          question: "Sample Number Question?",
+          question_type: "Number",
+          possible_answers: [],
+          question_number: 5
+        })
         // copy content form data.copyFormId to new
         let formTitle = {
           "name": data.title,
           "form_creator": this.form_creator,
-          "anonymous": data.anonymous
+          "anonymous": data.anonymous,
+          "questions": this.default_ques
         }
 
         this.openFormAddedSnackBar(formTitle.name);
