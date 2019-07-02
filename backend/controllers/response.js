@@ -15,7 +15,7 @@ module.exports = {
         let resp = await FormReceiver.findOne({email: respondentEmail, form: req.body.form_id})
         console.log(resp,"repondent")
         if(resp){
-            if(resp.submitted){
+            if(resp.submitted){ 
                 return res.status(302).json({success: false, error: "Entry already taken!"})
             }
             
@@ -23,7 +23,7 @@ module.exports = {
                 form_id: req.body.form_id,
                 respondent: resp,
                 answers: req.body.answers
-            })
+            }) 
             response = await newResponse.save()
             resp.submitted = true
             resp.responses = await Response.findById(response._id)

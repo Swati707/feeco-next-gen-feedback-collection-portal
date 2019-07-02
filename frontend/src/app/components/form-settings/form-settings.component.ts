@@ -39,8 +39,8 @@ export class FormSettingsComponent implements OnInit {
       form: this.form_id,
       emailids: this.respondents
     }
-    this.snackBar.open("Emails sent :)" ,null, {
-      duration: 2000,
+    this.snackBar.open("Emails are being sent..." ,null, {
+      duration: 10000,
     });
     this.formRecieverService.addFormReciever(body).subscribe(
       data => {
