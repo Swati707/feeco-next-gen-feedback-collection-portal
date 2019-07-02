@@ -2,33 +2,33 @@ const mongoose = require('mongoose');
 const Joi = require('joi');
 
 const FormCreator = mongoose.model('FormCreator', new mongoose.Schema({
-    username : {
+    username : {                // Username
         type : String,
         required : true,
         maxlength : 50
     },
-    password:{
+    password:{                  // Password
         type: String,
         required: true
     },
-    name : {
+    name : {                    // Name of form-creator
         type : String,
         required : true,
         maxlength : 50
     },
-    email : {
+    email : {                   // Email of form-creator
         type: String,
         required: true
     },
-    forms : [{
+    forms : [{                  // Forms created by the user
         type : mongoose.Schema.Types.ObjectId,
         ref: 'Form',
     }],
-    phone: {
+    phone: {                    // Phone number
         type: String,
         maxlength: 10
     },
-    dob: {
+    dob: {                      // Date of birth
         type: Date,
         required: false
     }

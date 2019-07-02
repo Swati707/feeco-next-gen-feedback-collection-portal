@@ -2,22 +2,22 @@ const Joi = require('joi');
 const mongoose = require('mongoose');
 
 const FormReceiver = mongoose.model('FormReceiver', new mongoose.Schema({
-    email : {
+    email : {                           // Email of the form-link-receivers
         type: String,
         required: false
     },
-    otp : {
+    otp : {                             // OTPs generated for each form-link-receiver
         type: String,
     },
-    submitted: {
+    submitted: {                        // Submitted flag to check if the form is filled only once
         type: Boolean,
         default: false
     },
-    form: {
+    form: {                             // The 'form' the receiver is asked to fill
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Form'
     },
-    responses : {
+    responses : {                       // The responses submitted by the form-receiver
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Response'
     }

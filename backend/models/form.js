@@ -11,28 +11,24 @@ var questionSchema = new mongoose.Schema({
 })
 
 const Form = mongoose.model('Form', new mongoose.Schema({
-    name: {
+    name: {                             // Form Title
         required: true,
         type: String
     },
-    questions: [questionSchema],
-    form_creator: {
+    questions: [questionSchema],        // Questions
+    form_creator: {                     // Form Creator
         type: mongoose.Schema.Types.ObjectId,
         ref: 'FormCreator'
     },
-    creation_time: {
+    creation_time: {                    // Form creation time
         type: Date,
         default: Date.now
     },
-    active_status: {
+    active_status: {                    // Active status
         type: Boolean,
         default: false
     },
-    html_body: {
-        type: String,
-        required: true
-    },
-    anonymous: Boolean
+    anonymous: Boolean                  // Anonymous Form collection Flag
 
 }));
 
