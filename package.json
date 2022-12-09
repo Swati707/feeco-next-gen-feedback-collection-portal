@@ -19,7 +19,7 @@
   "homepage": "https://github.com/Swati707/feedback-form-creator-and-analyser#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-promise-router": "^3.0.3",
     "joi": "^14.3.0",
     "mongoose": "^5.4.12",
